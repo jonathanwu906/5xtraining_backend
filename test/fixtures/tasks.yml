@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  content: MyText
+  start_time: 2024-06-02 16:37:46
+  end_time: 2024-06-02 16:37:46
+  priority: MyString
+  status: MyString
+  label: MyString
+  user: one
+
+two:
+  name: MyString
+  content: MyText
+  start_time: 2024-06-02 16:37:46
+  end_time: 2024-06-02 16:37:46
+  priority: MyString
+  status: MyString
+  label: MyString
+  user: two

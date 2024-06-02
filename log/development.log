@@ -103,3 +103,80 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 2ms (Views: 0.8ms | ActiveRecord: 0.0ms | Allocations: 217)
 
 
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7054036256432868465)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (4.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (3.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-06-02 08:34:53.858694', '2024-06-02 08:34:53.858696') RETURNING "key"[0m
+Migrating to CreateTasks (20240602083321)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE TABLE "tasks" ("id" bigserial primary key, "name" character varying, "content" text, "start_time" timestamp(6), "end_time" timestamp(6), "priority" character varying, "status" character varying, "label" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_4d2a9e4d7e"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7054036256432868465)[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7054036256432868465)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(7054036256432868465)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7054036256432868465)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+Migrating to CreateUsers (20240602083740)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying, "roles" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240602083740') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTasks (20240602083746)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "tasks" ("id" bigserial primary key, "name" character varying, "content" text, "start_time" timestamp(6), "end_time" timestamp(6), "priority" character varying, "status" character varying, "label" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_4d2a9e4d7e"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE INDEX "index_tasks_on_user_id" ON "tasks" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20240602083746') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(7054036256432868465)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (2.0ms)[0m  [1m[32mINSERT INTO "users" ("name", "roles", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "admin1"], ["roles", "admion"], ["created_at", "2024-06-02 08:43:56.205359"], ["updated_at", "2024-06-02 08:43:56.205359"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+[dotenv] Set [36mPOSTGRES_USERNAME[0m, [36mPOSTGRES_PASSWORD[0m, [36mPOSTGRES_DATABASE_DEVELOPMENT[0m, [36mPOSTGRES_DATABASE_TEST[0m, and [36mPOSTGRES_DATABASE_PRODUCTION[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("name", "roles", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Example User"], ["roles", "admin"], ["created_at", "2024-06-02 08:46:19.032890"], ["updated_at", "2024-06-02 08:46:19.032890"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Create (2.1ms)[0m  [1m[32mINSERT INTO "tasks" ("name", "content", "start_time", "end_time", "priority", "status", "label", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"[0m  [["name", "Example Task"], ["content", "This is an example task."], ["start_time", "2024-06-02 08:46:24.828499"], ["end_time", "2024-06-09 08:46:24.828534"], ["priority", "High"], ["status", "Open"], ["label", nil], ["user_id", 2], ["created_at", "2024-06-02 08:46:24.842772"], ["updated_at", "2024-06-02 08:46:24.842772"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT "tasks".* FROM "tasks" WHERE "tasks"."user_id" = $1 /* loading for pp */ LIMIT $2[0m  [["user_id", 2], ["LIMIT", 11]]
