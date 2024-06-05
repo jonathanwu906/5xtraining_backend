@@ -1,0 +1,61 @@
+<%= form_with(model: @task, local: true) do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <% if @task.errors[:name].any? %>
+      <div class="error"><%= @task.errors[:name].join(", ") %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+    <% if @task.errors[:content].any? %>
+      <div class="error"><%= @task.errors[:content].join(", ") %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :start_time %>
+    <%= form.datetime_select :start_time %>
+    <% if @task.errors[:start_time].any? %>
+      <div class="error"><%= @task.errors[:start_time].join(", ") %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :end_time %>
+    <%= form.datetime_select :end_time %>
+    <% if @task.errors[:end_time].any? %>
+      <div class="error"><%= @task.errors[:end_time].join(", ") %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :priority %>
+    <%= form.select :priority, Task.priorities.keys.map { |key| [key, key] } %>
+    <% if @task.errors[:priority].any? %>
+      <div class="error"><%= @task.errors[:priority].join(", ") %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :status %>
+    <%= form.select :status, Task.statuses.keys.map { |key| [key, key] } %>
+    <% if @task.errors[:status].any? %>
+      <div class="error"><%= @task.errors[:status].join(", ") %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :label %>
+    <%= form.text_field :label %>
+    <% if @task.errors[:label].any? %>
+      <div class="error"><%= @task.errors[:label].join(", ") %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
