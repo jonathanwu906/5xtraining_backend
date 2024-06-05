@@ -5,7 +5,10 @@
     <li>
       <%= link_to task.name, task %>
       <%= link_to 'Edit', edit_task_path(task) %>
-      <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Destroy', task, data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "確定要刪除此任務嗎？",
+                  } %>
     </li>
   <% end %>
 </ul>

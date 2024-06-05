@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :find_task, only: %i[show edit update destroy]
 
   def index
     @tasks = Task.all
@@ -16,34 +16,39 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    user = User.find(5)
+    @task = user.tasks.build(task_params)
     if @task.save
-      redirect_to @task, notice: '成功建立任務！'
+      flash[:notice] = '成功建立任務！'
+      redirect_to action: :show, id: @task.id
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: '成功更新任務！'
+      flash[:notice] = '成功更新任務！'
+      redirect_to action: :show, id: @task.id
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
+    @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_url, notice: '成功刪除任務！'
+    redirect_to root_path, notice: '成功刪除任務！'
   end
 
   private
 
-  def set_task
+  def find_task
     @task = Task.find(params[:id])
   end
 
   def task_params
-    params.require(:task).permit(:name, :content, :start_time, :end_time, :priority, :status, :label, :user_id)
+    allowed_params = %i[name content start_time end_time priority status label]
+    params.require(:task).permit(*allowed_params)
   end
 end
