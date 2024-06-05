@@ -5,13 +5,13 @@ class TasksController < ApplicationController
     @tasks = Task.all
   end
 
-  def show;  end
+  def show; end
 
   def new
     @task = Task.new
   end
 
-  def edit;  end
+  def edit; end
 
   def create
     # TODO: 之後會改成登入後從 session 取得 user
