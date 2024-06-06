@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # 本次專案使用的 Ruby 版本
-ruby "3.0.0"
+ruby "3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.3"
