@@ -16,9 +16,9 @@ jobs:
         ports:
           - 5433:5432
         env:
-          POSTGRES_DB: 5xtraining_backend_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: john9966
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -29,7 +29,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Set up Ruby
-      uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.0.0'
         bundler-cache: true
@@ -47,13 +47,13 @@ jobs:
         bundle exec rails db:schema:load
       env:
         RAILS_ENV: test
-        DATABASE_URL: postgres://postgres:john9966@localhost:5433/5xtraining_backend_test
+        DATABASE_URL: postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5433/${{ secrets.POSTGRES_DB }}
 
     - name: Run tests
       run: bundle exec rspec
       env:
         RAILS_ENV: test
-        POSTGRES_DB: 5xtraining_backend_test
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: john9966
-        DATABASE_URL: postgres://postgres:john9966@localhost:5433/5xtraining_backend_test
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        DATABASE_URL: postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5433/${{ secrets.POSTGRES_DB }}
