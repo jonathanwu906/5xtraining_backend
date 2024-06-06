@@ -1,13 +1,13 @@
-<h1>Tasks</h1>
-<%= link_to 'New Task', new_task_path %>
+<h1><%= t('tasks.new_task') %></h1>
+<%= link_to t('tasks.new_task'), new_task_path %>
 <ul>
   <% @tasks.each do |task| %>
-    <li>
+    <li id="<%= dom_id(task)%>">
       <%= link_to task.name, task %>
-      <%= link_to 'Edit', edit_task_path(task) %>
-      <%= link_to 'Destroy', task, data: {
+      <%= link_to t('tasks.edit_task'), edit_task_path(task) %>
+      <%= link_to t('tasks.destroy_task'), task, data: {
                     turbo_method: :delete,
-                    turbo_confirm: "確定要刪除此任務嗎？",
+                    turbo_confirm: t('tasks.destroy_confirm'),
                   } %>
     </li>
   <% end %>

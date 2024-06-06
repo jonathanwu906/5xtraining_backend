@@ -15,10 +15,10 @@ class TasksController < ApplicationController
 
   def create
     # TODO: 之後會改成登入後從 session 取得 user
-    user = User.find(5)
+    user = User.first
     @task = user.tasks.build(task_params)
     if @task.save
-      flash[:notice] = '成功建立任務！'
+      flash[:notice] = I18n.t('tasks.created')
       redirect_to action: :show, id: @task.id
     else
       render :new, status: :unprocessable_entity
@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:notice] = '成功更新任務！'
+      flash[:notice] = I18n.t('tasks.updated')
       redirect_to action: :show, id: @task.id
     else
       render :edit, status: :unprocessable_entity
@@ -37,7 +37,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to root_path, notice: '成功刪除任務！'
+    redirect_to root_path, notice: I18n.t('tasks.destroyed')
   end
 
   private
