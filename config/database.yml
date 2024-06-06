@@ -45,6 +45,8 @@ test:
   pool: 5
   username: <%= ENV['POSTGRES_USERNAME'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
+  port: 5433
+  host: localhost
 
 production:
   adapter: postgresql
