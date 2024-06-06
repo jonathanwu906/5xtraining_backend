@@ -15,7 +15,7 @@ class TasksController < ApplicationController
 
   def create
     # TODO: 之後會改成登入後從 session 取得 user
-    user = User.find(5)
+    user = User.find(46)
     @task = user.tasks.build(task_params)
     if @task.save
       flash[:notice] = '成功建立任務！'

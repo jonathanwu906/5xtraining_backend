@@ -2,7 +2,7 @@
 <%= link_to 'New Task', new_task_path %>
 <ul>
   <% @tasks.each do |task| %>
-    <li>
+    <li id="task_<%= task.id %>">
       <%= link_to task.name, task %>
       <%= link_to 'Edit', edit_task_path(task) %>
       <%= link_to 'Destroy', task, data: {
