@@ -37,7 +37,7 @@ jobs:
     - name: Set up PostgreSQL
       run: |
         sudo apt-get install -y libpq-dev
-        cp config/database.yml.ci config/database.yml
+        cp config/database.yml
       env:
         RAILS_ENV: test
 
