@@ -1,0 +1,9 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: 5xtraining_backend_test
+  pool: 5
+  username: postgres
+  password: john9966
+  port: 5433
+  host: localhost
