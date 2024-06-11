@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# A task belongs to a user with various validations
 class Task < ApplicationRecord
   belongs_to :user
   validates :name, presence: true, length: { maximum: 255 }
