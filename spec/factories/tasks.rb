@@ -1,11 +1,18 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :task do
     name { Faker::Lorem.sentence }
     content { Faker::Lorem.paragraph }
-    start_time { Time.now }
-    end_time { Time.now + 1.hour }
-    priority { "高" }
-    status { "未完成" }
-    association :user
+    start_time { Time.zone.now }
+    end_time { start_time + duration }
+    priority { '高' }
+    status { '未完成' }
+
+    user
+
+    transient do
+      duration { 1.hour }
+    end
   end
 end
