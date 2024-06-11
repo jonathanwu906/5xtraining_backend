@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Create Tasks table
 class CreateTasks < ActiveRecord::Migration[7.1]
   def change
     create_table :tasks do |t|
@@ -9,7 +12,6 @@ class CreateTasks < ActiveRecord::Migration[7.1]
       t.string :status
       t.string :label
       t.references :user, null: false, foreign_key: true
-
       t.timestamps
     end
   end
