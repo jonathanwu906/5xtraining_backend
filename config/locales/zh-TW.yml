@@ -1,0 +1,86 @@
+zh-TW:
+  tasks:
+    back: "返回"
+    title: "任務"
+    new_task: "新任務"
+    edit_task: "編輯"
+    destroy_task: "刪除"
+    created: "成功建立任務！"
+    updated: "成功更新任務！"
+    destroyed: "成功刪除任務！"
+    destroy_confirm: "確定要刪除此任務？"
+    attributes:
+      name: "名稱"
+      content: "內容"
+      start_time: "開始時間"
+      end_time: "結束時間"
+      priority_row: "優先程度"
+      priority: 
+        low: "低"
+        medium: "中"
+        high: "高"
+      status_row: "狀態"
+      status:
+        pending: "待處理"
+        in_progress: "進行中"
+        completed: "已完成"
+      label: "標籤"
+    submit: "送出"
+  date:
+    abbr_day_names:
+    - 週日
+    - 週一
+    - 週二
+    - 週三
+    - 週四
+    - 週五
+    - 週六
+    abbr_month_names:
+    - 
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    day_names:
+    - 星期日
+    - 星期一
+    - 星期二
+    - 星期三
+    - 星期四
+    - 星期五
+    - 星期六
+    formats:
+      default: "%Y-%m-%d"
+      long: "%Y年%m月%d日"
+      short: "%m月%d日"
+    month_names:
+    - 
+    - 一月
+    - 二月
+    - 三月
+    - 四月
+    - 五月
+    - 六月
+    - 七月
+    - 八月
+    - 九月
+    - 十月
+    - 十一月
+    - 十二月
+    order:
+    - :year
+    - :month
+    - :day
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: 不能為空白
+      greater_than: 必須大於%{count}
