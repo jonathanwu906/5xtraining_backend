@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# TaskController handles the CRUD operations for tasks
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
 
@@ -21,6 +24,7 @@ class TasksController < ApplicationController
       flash[:notice] = I18n.t('tasks.created')
       redirect_to action: :show, id: @task.id
     else
+      flash[:notice] = '任務建立失敗！' # rubocop:disable Rails/I18nLocaleTexts
       render :new, status: :unprocessable_entity
     end
   end
@@ -30,6 +34,7 @@ class TasksController < ApplicationController
       flash[:notice] = I18n.t('tasks.updated')
       redirect_to action: :show, id: @task.id
     else
+      flash[:notice] = '任務更新失敗！' # rubocop:disable Rails/I18nLocaleTexts
       render :edit, status: :unprocessable_entity
     end
   end
