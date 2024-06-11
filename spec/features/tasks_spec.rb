@@ -16,22 +16,22 @@ RSpec.describe 'Tasks' do
 
       before do
         fill_in_task_details(task_name, task_content)
-        click_link_or_button 'Create Task'
+        click_link_or_button I18n.t('tasks.submit')
       end
 
-      it { is_expected.to have_text('成功建立任務！') }
+      it { is_expected.to have_text(I18n.t('tasks.created')) }
       it { is_expected.to have_text(task_name) }
       it { is_expected.to have_text(task_content) }
     end
 
     context 'when creation fails' do
       before do
-        fill_in 'Name', with: ''
-        click_link_or_button 'Create Task'
+        fill_in I18n.t('tasks.attributes.name'), with: ''
+        click_link_or_button I18n.t('tasks.submit')
       end
 
-      it { is_expected.to have_text('任務建立失敗！') }
-      it { is_expected.to have_css('.error', text: "can't be blank") }
+      it { is_expected.to have_text(I18n.t('errors.messages.blank')) }
+      it { is_expected.to have_css('.error', text: I18n.t('errors.messages.blank')) }
     end
   end
 
@@ -54,24 +54,24 @@ RSpec.describe 'Tasks' do
       let(:new_task_content) { Faker::Lorem.paragraph }
 
       before do
-        fill_in 'Name', with: new_task_name
-        fill_in 'Content', with: new_task_content
-        click_link_or_button 'Update Task'
+        fill_in I18n.t('tasks.attributes.name'), with: new_task_name
+        fill_in I18n.t('tasks.attributes.content'), with: new_task_content
+        click_link_or_button I18n.t('tasks.submit')
       end
 
-      it { is_expected.to have_text('成功更新任務！') }
+      it { is_expected.to have_text(I18n.t('tasks.updated')) }
       it { is_expected.to have_text(new_task_name) }
       it { is_expected.to have_text(new_task_content) }
     end
 
     context 'when update fails' do
       before do
-        fill_in 'Name', with: ''
-        click_link_or_button 'Update Task'
+        fill_in I18n.t('tasks.attributes.name'), with: ''
+        click_link_or_button I18n.t('tasks.submit')
       end
 
-      it { is_expected.to have_text('任務更新失敗！') }
-      it { is_expected.to have_css('.error', text: "can't be blank") }
+      it { is_expected.to have_text(I18n.t('errors.messages.blank')) }
+      it { is_expected.to have_css('.error', text: I18n.t('errors.messages.blank')) }
     end
   end
 
@@ -81,29 +81,29 @@ RSpec.describe 'Tasks' do
     before do
       visit tasks_path
       within "##{dom_id(task)}" do
-        click_link_or_button 'Destroy'
+        click_link_or_button I18n.t('tasks.destroy_task')
       end
     end
 
-    it { is_expected.to have_text('成功刪除任務！') }
+    it { is_expected.to have_text(I18n.t('tasks.destroyed')) }
     it { is_expected.to have_no_text(task.name) }
     it { is_expected.to have_no_text(task.content) }
     it { is_expected.to have_no_css("##{dom_id(task)}") }
   end
 
   def fill_in_task_details(name = Faker::Lorem.sentence, content = Faker::Lorem.paragraph)
-    fill_in 'Name', with: name
-    fill_in 'Content', with: content
-    select '高', from: 'Priority'
-    select '未完成', from: 'Status'
+    fill_in I18n.t('tasks.attributes.name'), with: name
+    fill_in I18n.t('tasks.attributes.content'), with: content
+    select I18n.t('tasks.attributes.priority.high'), from: I18n.t('tasks.attributes.priority_row')
+    select I18n.t('tasks.attributes.status.completed'), from: I18n.t('tasks.attributes.status_row')
     select_date_and_time(Time.zone.now, from: 'task_start_time')
     select_date_and_time(1.hour.from_now, from: 'task_end_time')
   end
 
-  def select_date_and_time(datetime, options = {})
+  def select_date_and_time(datetime, options = {}) # rubocop:disable Metrics/AbcSize
     field = options[:from]
     select datetime.year.to_s, from: "#{field}_1i"
-    select datetime.strftime('%B'), from: "#{field}_2i"
+    select I18n.t('date.month_names')[datetime.month], from: "#{field}_2i"
     select datetime.day.to_s, from: "#{field}_3i"
     select format('%02d', datetime.hour), from: "#{field}_4i"
     select format('%02d', datetime.min), from: "#{field}_5i"
