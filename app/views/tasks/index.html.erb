@@ -1,8 +1,8 @@
 <h1>Tasks</h1>
-<%= link_to 'New Task', new_task_path %>
+<%= link_to t('tasks.new_task'), new_task_path %>
 <ul>
   <% @tasks.each do |task| %>
-    <li id="task_<%= task.id %>">
+    <li id="<%= dom_id(task)%>">
       <%= link_to task.name, task %>
       <%= link_to 'Edit', edit_task_path(task) %>
       <%= link_to 'Destroy', task, data: {
