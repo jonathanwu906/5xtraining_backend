@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Tasks' do
   subject { page }
 
-  let(:user) { create(:user) }
+  before { create(:user) }
 
   describe '#create' do
     before { visit new_task_path }
