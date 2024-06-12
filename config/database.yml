@@ -54,3 +54,4 @@ production:
   pool: 5
   username: <%= ENV['POSTGRES_USERNAME_PRODUCTION'] %>
   password: <%= ENV['POSTGRES_PASSWORD_PRODUCTION'] %>
+  port: 5432
