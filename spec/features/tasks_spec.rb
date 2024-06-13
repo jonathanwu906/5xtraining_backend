@@ -19,7 +19,7 @@ RSpec.describe 'Tasks' do
         click_link_or_button I18n.t('tasks.submit')
       end
 
-      it { is_expected.to have_text(I18n.t('tasks.created')) }
+      it { is_expected.to have_text(I18n.t('tasks.created_successfully')) }
       it { is_expected.to have_text(task_name) }
       it { is_expected.to have_text(task_content) }
     end
@@ -59,7 +59,7 @@ RSpec.describe 'Tasks' do
         click_link_or_button I18n.t('tasks.submit')
       end
 
-      it { is_expected.to have_text(I18n.t('tasks.updated')) }
+      it { is_expected.to have_text(I18n.t('tasks.updated_successfully')) }
       it { is_expected.to have_text(new_task_name) }
       it { is_expected.to have_text(new_task_content) }
     end
@@ -85,7 +85,7 @@ RSpec.describe 'Tasks' do
       end
     end
 
-    it { is_expected.to have_text(I18n.t('tasks.destroyed')) }
+    it { is_expected.to have_text(I18n.t('tasks.destroyed_successfully')) }
     it { is_expected.to have_no_text(task.name) }
     it { is_expected.to have_no_text(task.content) }
     it { is_expected.to have_no_css("##{dom_id(task)}") }

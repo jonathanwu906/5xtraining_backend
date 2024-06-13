@@ -2,12 +2,12 @@ zh-TW:
   tasks:
     back: "返回"
     title: "任務"
-    new_task: "新任務"
-    edit_task: "編輯"
-    destroy_task: "刪除"
-    created: "成功建立任務！"
-    updated: "成功更新任務！"
-    destroyed: "成功刪除任務！"
+    new: "新任務"
+    edit: "編輯"
+    destroy: "刪除"
+    created_successfully: "成功建立任務！"
+    updated_successfully: "成功更新任務！"
+    destroyed_successfully: "成功刪除任務！"
     destroy_confirm: "確定要刪除此任務？"
     attributes:
       name: "名稱"
@@ -57,10 +57,6 @@ zh-TW:
     - 星期四
     - 星期五
     - 星期六
-    formats:
-      default: "%Y-%m-%d"
-      long: "%Y年%m月%d日"
-      short: "%m月%d日"
     month_names:
     - 
     - 一月
