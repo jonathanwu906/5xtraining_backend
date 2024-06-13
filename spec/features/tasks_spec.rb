@@ -81,7 +81,7 @@ RSpec.describe 'Tasks' do
     before do
       visit tasks_path
       within "##{dom_id(task)}" do
-        click_link_or_button I18n.t('tasks.destroy_task')
+        click_link_or_button I18n.t('tasks.destroy')
       end
     end
 
