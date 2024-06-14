@@ -36,12 +36,23 @@ RSpec.describe 'Tasks' do
   end
 
   describe '#index' do
-    let!(:task) { create(:task) }
+    let!(:task_created_one_day_ago) { create(:task, created_at: 1.day.ago) }
+    let!(:task_created_two_days_ago) { create(:task, created_at: 2.days.ago) }
+    let!(:task_created_three_days_ago) { create(:task, created_at: 3.days.ago) }
 
-    before { visit task_path(task) }
+    before { visit tasks_path }
 
-    it { is_expected.to have_text(task.name) }
-    it { is_expected.to have_text(task.content) }
+    it 'displays the task created three days ago before the task created two days ago' do
+      expect(page.body.index(task_created_three_days_ago.name)).to be < page.body.index(task_created_two_days_ago.name)
+    end
+
+    it 'displays the task created two days ago before the task created one day ago' do
+      expect(page.body.index(task_created_two_days_ago.name)).to be < page.body.index(task_created_one_day_ago.name)
+    end
+
+    it { is_expected.to have_text(task_created_one_day_ago.name) }
+    it { is_expected.to have_text(task_created_two_days_ago.name) }
+    it { is_expected.to have_text(task_created_three_days_ago.name) }
   end
 
   describe '#update' do
