@@ -6,8 +6,8 @@ FactoryBot.define do
     content { Faker::Lorem.paragraph }
     start_time { Time.zone.now }
     end_time { start_time + duration }
-    priority { '高' }
-    status { '未完成' }
+    priority { 'high' }
+    status { 'completed' }
 
     user
 

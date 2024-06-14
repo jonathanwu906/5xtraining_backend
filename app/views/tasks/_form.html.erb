@@ -1,6 +1,6 @@
 <%= form_with(model: @task, local: true) do |form| %>
   <div>
-    <%= form.label :name %>
+    <%= form.label :name, t('tasks.attributes.name') %>
     <%= form.text_field :name %>
     <% if @task.errors[:name].any? %>
       <div class="error"><%= @task.errors[:name].join(", ") %></div>
@@ -8,7 +8,7 @@
   </div>
 
   <div>
-    <%= form.label :content %>
+    <%= form.label :content, t('tasks.attributes.content') %>
     <%= form.text_area :content %>
     <% if @task.errors[:content].any? %>
       <div class="error"><%= @task.errors[:content].join(", ") %></div>
@@ -16,7 +16,7 @@
   </div>
 
   <div>
-    <%= form.label :start_time %>
+    <%= form.label :start_time, t('tasks.attributes.start_time') %>
     <%= form.datetime_select :start_time %>
     <% if @task.errors[:start_time].any? %>
       <div class="error"><%= @task.errors[:start_time].join(", ") %></div>
@@ -24,7 +24,7 @@
   </div>
 
   <div>
-    <%= form.label :end_time %>
+    <%= form.label :end_time, t('tasks.attributes.end_time') %>
     <%= form.datetime_select :end_time %>
     <% if @task.errors[:end_time].any? %>
       <div class="error"><%= @task.errors[:end_time].join(", ") %></div>
@@ -32,23 +32,23 @@
   </div>
 
   <div>
-    <%= form.label :priority %>
-    <%= form.select :priority, Task.priorities.keys.map { |key| [key, key] } %>
+    <%= form.label :priority, t('tasks.attributes.priority_row') %>
+    <%= form.select :priority, Task.priorities.keys.map { |key| [I18n.t("tasks.attributes.priority.#{key}"), key] } %>
     <% if @task.errors[:priority].any? %>
       <div class="error"><%= @task.errors[:priority].join(", ") %></div>
     <% end %>
   </div>
 
   <div>
-    <%= form.label :status %>
-    <%= form.select :status, Task.statuses.keys.map { |key| [key, key] } %>
+    <%= form.label :status, t('tasks.attributes.status_row') %>
+    <%= form.select :status, Task.statuses.keys.map { |key| [I18n.t("tasks.attributes.status.#{key}"), key] } %>
     <% if @task.errors[:status].any? %>
       <div class="error"><%= @task.errors[:status].join(", ") %></div>
     <% end %>
   </div>
 
   <div>
-    <%= form.label :label %>
+    <%= form.label :label, t('tasks.attributes.label') %>
     <%= form.text_field :label %>
     <% if @task.errors[:label].any? %>
       <div class="error"><%= @task.errors[:label].join(", ") %></div>
@@ -56,6 +56,6 @@
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit t('tasks.submit') %>
   </div>
 <% end %>
