@@ -36,23 +36,25 @@ RSpec.describe 'Tasks' do
   end
 
   describe '#index' do
-    let!(:task_created_one_day_ago) { create(:task, created_at: 1.day.ago) }
-    let!(:task_created_two_days_ago) { create(:task, created_at: 2.days.ago) }
-    let!(:task_created_three_days_ago) { create(:task, created_at: 3.days.ago) }
+    let!(:tasks) do
+      3.downto(1).map do |i|
+        travel_to(i.days.ago) { create(:task) }
+      end
+    end
 
     before { visit tasks_path }
 
-    it 'displays the task created three days ago before the task created two days ago' do
-      expect(page.body.index(task_created_three_days_ago.name)).to be < page.body.index(task_created_two_days_ago.name)
+    it 'displays tasks in ascending order of creation date' do
+      tasks.each_cons(2) do |task_earlier, task_later|
+        expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
+      end
     end
 
-    it 'displays the task created two days ago before the task created one day ago' do
-      expect(page.body.index(task_created_two_days_ago.name)).to be < page.body.index(task_created_one_day_ago.name)
+    it 'displays all tasks' do
+      tasks.each do |task|
+        expect(page).to have_text(task.name)
+      end
     end
-
-    it { is_expected.to have_text(task_created_one_day_ago.name) }
-    it { is_expected.to have_text(task_created_two_days_ago.name) }
-    it { is_expected.to have_text(task_created_three_days_ago.name) }
   end
 
   describe '#update' do
