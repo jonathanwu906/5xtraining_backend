@@ -50,6 +50,8 @@ production:
   adapter: postgresql
   encoding: unicode
   database: <%= ENV['POSTGRES_DATABASE_PRODUCTION'] %>
+  host: <%= ENV['POSTGRES_HOST_PRODUCTION'] %>
   pool: 5
-  username: <%= ENV['POSTGRES_USERNAME'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  username: <%= ENV['POSTGRES_USERNAME_PRODUCTION'] %>
+  password: <%= ENV['POSTGRES_PASSWORD_PRODUCTION'] %>
+  port: 5432
