@@ -17,55 +17,69 @@ RSpec.describe Task do
     }
   end
 
-  context 'when validations' do
-    it 'is not valid without a name' do
-      task = described_class.new(valid_attributes.except(:name))
-      expect(task).not_to be_valid
+  describe 'validations' do
+    subject { described_class.new(attributes) }
+
+    let(:attributes) { valid_attributes }
+
+    context 'when there is no name' do
+      before { attributes.except!(:name) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid with a name longer than 255 characters' do
-      task = described_class.new(valid_attributes.merge(name: Faker::Lorem.characters(number: 256)))
-      expect(task).not_to be_valid
+    context 'when name is longer than 255 characters' do
+      before { attributes.merge!(name: Faker::Lorem.characters(number: 256)) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid without content' do
-      task = described_class.new(valid_attributes.except(:content))
-      expect(task).not_to be_valid
+    context 'when there is no content' do
+      before { attributes.except!(:content) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid with content longer than 1000 characters' do
-      task = described_class.new(valid_attributes.merge(content: Faker::Lorem.characters(number: 1001)))
-      expect(task).not_to be_valid
+    context 'when content is longer than 1000 characters' do
+      before { attributes.merge!(content: Faker::Lorem.characters(number: 1001)) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid without a start_time' do
-      task = described_class.new(valid_attributes.except(:start_time))
-      expect(task).not_to be_valid
+    context 'when there is no start_time' do
+      before { attributes.except!(:start_time) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid without an end_time' do
-      task = described_class.new(valid_attributes.except(:end_time))
-      expect(task).not_to be_valid
+    context 'when there is no end_time' do
+      before { attributes.except!(:end_time) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid if end_time is not greater than start_time' do
-      task = described_class.new(valid_attributes.merge(end_time: valid_attributes[:start_time] - 1.hour))
-      expect(task).not_to be_valid
+    context 'when end_time is not greater than start_time' do
+      before { attributes.merge!(end_time: attributes[:start_time] - 1.hour) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid without a priority' do
-      task = described_class.new(valid_attributes.except(:priority))
-      expect(task).not_to be_valid
+    context 'when there is no priority' do
+      before { attributes.except!(:priority) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid without a status' do
-      task = described_class.new(valid_attributes.except(:status))
-      expect(task).not_to be_valid
+    context 'when there is no status' do
+      before { attributes.except!(:status) }
+
+      it { is_expected.not_to be_valid }
     end
 
-    it 'is not valid with a label longer than 30 characters' do
-      task = described_class.new(valid_attributes.merge(label: Faker::Lorem.characters(number: 31)))
-      expect(task).not_to be_valid
+    context 'when label is longer than 30 characters' do
+      before { attributes.merge!(label: Faker::Lorem.characters(number: 31)) }
+
+      it { is_expected.not_to be_valid }
     end
   end
 
