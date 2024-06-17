@@ -12,6 +12,7 @@ zh-TW:
     attributes:
       name: "名稱"
       content: "內容"
+      created_at: "建立時間"
       start_time: "開始時間"
       end_time: "結束時間"
       priority_row: "優先程度"
@@ -26,6 +27,9 @@ zh-TW:
         completed: "已完成"
       label: "標籤"
     submit: "送出"
+    sort_by: "排序方式"
+    sort_by_created_at: "依建立時間"
+    sort_by_end_time: "依結束時間"
   date:
     abbr_day_names:
       - 週日

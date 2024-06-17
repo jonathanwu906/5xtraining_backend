@@ -1,5 +1,9 @@
 <h1><%= t('tasks.new') %></h1>
 <%= link_to t('tasks.new'), new_task_path %>
+<%= form_with url: tasks_path, method: :get, local: true do %>
+  <label for="sort_order"><%= t('tasks.sort_by') %>:</label>
+  <%= select_tag :sort_order, sort_options(@sort_order), onchange: 'this.form.submit();' %>
+<% end %>
 <ul>
   <% @tasks.each do |task| %>
     <li id="<%= dom_id(task)%>">
@@ -9,6 +13,10 @@
                     turbo_method: :delete,
                     turbo_confirm: t('tasks.destroy_confirm'),
                   } %>
+      <br>
+      <%= t('tasks.attributes.created_at') %>: <%= task.created_at %>
+      <br>
+      <%= t('tasks.attributes.end_time') %>: <%= task.end_time %>
     </li>
   <% end %>
 </ul>

@@ -5,7 +5,8 @@ class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    @sort_order = params[:sort_order] || 'created_at'
+    @tasks = Task.order(@sort_order => :asc)
   end
 
   def show; end
