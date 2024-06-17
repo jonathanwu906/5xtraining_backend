@@ -36,12 +36,49 @@ RSpec.describe 'Tasks' do
   end
 
   describe '#index' do
-    let!(:task) { create(:task) }
+    let!(:tasks) do
+      3.downto(1).map do |i|
+        travel_to(i.days.ago) { create(:task) }
+      end
+    end
 
-    before { visit task_path(task) }
+    before { visit tasks_path }
 
-    it { is_expected.to have_text(task.name) }
-    it { is_expected.to have_text(task.content) }
+    it 'displays tasks in ascending order of creation date' do
+      tasks.each_cons(2) do |task_earlier, task_later|
+        expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
+      end
+    end
+
+    it 'displays all tasks' do
+      tasks.each do |task|
+        expect(page).to have_text(task.name)
+      end
+    end
+
+    context 'when sorting by created time' do
+      before do
+        select I18n.t('tasks.sort_by_created_at'), from: 'sort_order'
+      end
+
+      it 'sorts task by created time in ascending order' do
+        tasks.each_cons(2) do |task_earlier, task_later|
+          expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
+        end
+      end
+    end
+
+    context 'when sorting by end time' do
+      before do
+        select I18n.t('tasks.sort_by_end_time'), from: 'sort_order'
+      end
+
+      it 'sorts task by end time in ascending order' do
+        tasks.each_cons(2) do |task_earlier, task_later|
+          expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
+        end
+      end
+    end
   end
 
   describe '#update' do
