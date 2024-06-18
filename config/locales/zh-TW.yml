@@ -28,8 +28,13 @@ zh-TW:
       label: "標籤"
     submit: "送出"
     sort_by: "排序方式"
+    all_status: "全部"
+    search_by_name: "依名稱查詢"
+    filter_by_status: "依狀態查詢"
     sort_by_created_at: "依建立時間"
     sort_by_end_time: "依結束時間"
+    button:
+      search_by_name: "查詢"
   date:
     abbr_day_names:
       - 週日
@@ -82,5 +87,6 @@ zh-TW:
   errors:
     format: "%{attribute}%{message}"
     messages:
+      too_long: 長度不能超過%{count}個字元
       blank: 不能為空白
       greater_than: 必須大於%{count}
