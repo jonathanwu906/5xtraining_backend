@@ -73,6 +73,7 @@ group :test do
   gem 'capybara'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers', '~> 6.0'
 end
 
 # Step 5: 安裝 pg
