@@ -43,6 +43,7 @@ RSpec.describe 'Tasks' do
     end
 
     before { visit tasks_path }
+
     it 'displays tasks in ascending order of creation date' do
       tasks.each_cons(2) do |task_earlier, task_later|
         expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
@@ -76,6 +77,32 @@ RSpec.describe 'Tasks' do
         tasks.each_cons(2) do |task_earlier, task_later|
           expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
         end
+      end
+    end
+
+    context 'when searching by name' do
+      let(:task_name) { Faker::Lorem.word }
+
+      before do
+        tasks.first.update(name: task_name)
+        fill_in I18n.t('tasks.search_by_name'), with: task_name
+        click_link_or_button I18n.t('tasks.button.search_by_name')
+      end
+
+      it 'displays the tasks with the specific name' do
+        expect(page).to have_text(task_name)
+      end
+    end
+
+    context 'when filtering by status' do
+      let(:task_status) { I18n.t("tasks.attributes.status.#{%w[pending in_progress completed].sample}") }
+
+      before do
+        select task_status, from: 'status'
+      end
+
+      it 'displays the tasks with the specifc status' do
+        expect(page).to have_text(task_status)
       end
     end
   end
