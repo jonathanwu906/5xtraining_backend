@@ -82,5 +82,6 @@ zh-TW:
   errors:
     format: "%{attribute}%{message}"
     messages:
+      too_long: 長度不能超過%{count}個字元
       blank: 不能為空白
       greater_than: 必須大於%{count}

@@ -43,7 +43,6 @@ RSpec.describe 'Tasks' do
     end
 
     before { visit tasks_path }
-
     it 'displays tasks in ascending order of creation date' do
       tasks.each_cons(2) do |task_earlier, task_later|
         expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
