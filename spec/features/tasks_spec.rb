@@ -36,9 +36,10 @@ RSpec.describe 'Tasks' do
   end
 
   describe '#index' do
+    priorities = %i[high medium low]
     let!(:tasks) do
       3.downto(1).map do |i|
-        travel_to(i.days.ago) { create(:task) }
+        travel_to(i.days.ago) { create(:task, priority: priorities[i - 1]) }
       end
     end
 
@@ -76,6 +77,18 @@ RSpec.describe 'Tasks' do
       it 'sorts task by end time in ascending order' do
         tasks.each_cons(2) do |task_earlier, task_later|
           expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
+        end
+      end
+    end
+
+    context 'when sorting by priority' do
+      before do
+        select I18n.t('tasks.sort_by_priority'), from: 'sort_order'
+      end
+
+      it 'sorts tasks by priority in descending order' do
+        tasks.each_cons(2) do |task_higher, task_lower|
+          expect(page.body.index(task_higher.name)).to be < page.body.index(task_lower.name)
         end
       end
     end
