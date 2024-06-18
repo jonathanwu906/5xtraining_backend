@@ -45,9 +45,8 @@ jobs:
     - name: Set up PostgreSQL
       run: sudo apt-get install -y postgresql-client
 
-    - name: Create and setup database
+    - name: Setup database
       run: |
-        bin/rails db:create
         bin/rails db:schema:load
 
     - name: Run tests
