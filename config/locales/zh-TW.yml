@@ -33,6 +33,7 @@ zh-TW:
     filter_by_status: "依狀態查詢"
     sort_by_created_at: "依建立時間"
     sort_by_end_time: "依結束時間"
+    sort_by_priority: "依優先程度"
     button:
       search_by_name: "查詢"
   date:
