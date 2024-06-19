@@ -3,7 +3,7 @@
     <%= form.label :name, t('tasks.attributes.name'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:name].any? %>
-      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:name].join(", ") %></div>
+      <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:name].join(", ") %></div>
     <% end %>
   </div>
 
@@ -11,7 +11,7 @@
     <%= form.label :content, t('tasks.attributes.content'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.text_area :content, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:content].any? %>
-      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:content].join(", ") %></div>
+      <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:content].join(", ") %></div>
     <% end %>
   </div>
 
@@ -19,7 +19,7 @@
     <%= form.label :start_time, t('tasks.attributes.start_time'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.datetime_select :start_time, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:start_time].any? %>
-      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:start_time].join(", ") %></div>
+      <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:start_time].join(", ") %></div>
     <% end %>
   </div>
 
@@ -27,7 +27,7 @@
     <%= form.label :end_time, t('tasks.attributes.end_time'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.datetime_select :end_time, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:end_time].any? %>
-      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:end_time].join(", ") %></div>
+      <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:end_time].join(", ") %></div>
     <% end %>
   </div>
 
@@ -35,7 +35,7 @@
     <%= form.label :priority, t('tasks.attributes.priority_row'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.select :priority, Task.priorities.keys.map { |key| [I18n.t("tasks.attributes.priority.#{key}"), key] }, {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:priority].any? %>
-      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:priority].join(", ") %></div>
+      <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:priority].join(", ") %></div>
     <% end %>
   </div>
 
@@ -43,7 +43,7 @@
     <%= form.label :status, t('tasks.attributes.status_row'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.select :status, Task.statuses.keys.map { |key| [I18n.t("tasks.attributes.status.#{key}"), key] }, {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:status].any? %>
-      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:status].join(", ") %></div>
+      <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:status].join(", ") %></div>
     <% end %>
   </div>
 
@@ -51,7 +51,7 @@
     <%= form.label :label, t('tasks.attributes.label'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.text_field :label, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:label].any? %>
-      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:label].join(", ") %></div>
+      <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:label].join(", ") %></div>
     <% end %>
   </div>
 
