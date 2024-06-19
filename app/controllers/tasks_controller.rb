@@ -9,7 +9,7 @@ class TasksController < ApplicationController
     @status = params[:status]
     @name_query = params[:name]
 
-    @tasks = Task.all
+    @tasks = Task.all.page params[:page]
     @tasks = search_by_name(@tasks)
     @tasks = filter_by_status(@tasks)
     @tasks = sort_tasks(@tasks)

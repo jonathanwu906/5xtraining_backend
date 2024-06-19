@@ -15,4 +15,6 @@ class Task < ApplicationRecord
 
   scope :search_by_name, ->(name) { where('name ILIKE ?', "%#{name}%") if name.present? }
   scope :filter_by_status, ->(status) { where(status:) if status.present? }
+
+  paginates_per 5
 end
