@@ -6,7 +6,8 @@ class TasksController < ApplicationController
 
   def index
     @sort_order = params[:sort_order] || 'created_at'
-    @tasks = Task.order(@sort_order => :asc)
+    @sort_direction = params[:sort_direction] || 'asc'
+    @tasks = TaskSorter.sort(Task.all, @sort_order, @sort_direction)
   end
 
   def show; end

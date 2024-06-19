@@ -1,10 +1,19 @@
 # frozen_string_literal: true
 
 module TasksHelper # rubocop:disable Style/Documentation
-  def sort_options(selected_sort_order)
-    options_for_select([
-                         [I18n.t('tasks.sort_options.created_time'), 'created_at'],
-                         [I18n.t('tasks.sort_options.end_time'), 'end_time']
-                       ], selected: selected_sort_order)
+  def sort_order_options
+    {
+      t('tasks.sort_options.created_at') => 'created_at',
+      t('tasks.sort_options.end_time') => 'end_time',
+      t('tasks.sort_options.priority') => 'priority',
+      t('tasks.sort_options.status') => 'status'
+    }
+  end
+
+  def sort_direction_options
+    {
+      t('tasks.sort_directions.asc') => 'asc',
+      t('tasks.sort_directions.desc') => 'desc'
+    }
   end
 end
