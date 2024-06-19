@@ -49,5 +49,8 @@ jobs:
       run: |
         bin/rails db:schema:load
 
+    - name: Precompile assets
+      run: bin/rails assets:precompile
+
     - name: Run tests
       run: bundle exec rspec -f d
