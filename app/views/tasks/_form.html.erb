@@ -1,61 +1,62 @@
-<%= form_with(model: @task, local: true) do |form| %>
-  <div>
-    <%= form.label :name, t('tasks.attributes.name') %>
-    <%= form.text_field :name %>
+<%= form_with(model: @task, local: true, class: "max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md") do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, t('tasks.attributes.name'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:name].any? %>
-      <div class="error"><%= @task.errors[:name].join(", ") %></div>
+      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:name].join(", ") %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :content, t('tasks.attributes.content') %>
-    <%= form.text_area :content %>
+  <div class="mb-4">
+    <%= form.label :content, t('tasks.attributes.content'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_area :content, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:content].any? %>
-      <div class="error"><%= @task.errors[:content].join(", ") %></div>
+      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:content].join(", ") %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :start_time, t('tasks.attributes.start_time') %>
-    <%= form.datetime_select :start_time %>
+  <div class="mb-4">
+    <%= form.label :start_time, t('tasks.attributes.start_time'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.datetime_select :start_time, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:start_time].any? %>
-      <div class="error"><%= @task.errors[:start_time].join(", ") %></div>
+      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:start_time].join(", ") %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :end_time, t('tasks.attributes.end_time') %>
-    <%= form.datetime_select :end_time %>
+  <div class="mb-4">
+    <%= form.label :end_time, t('tasks.attributes.end_time'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.datetime_select :end_time, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:end_time].any? %>
-      <div class="error"><%= @task.errors[:end_time].join(", ") %></div>
+      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:end_time].join(", ") %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :priority, t('tasks.attributes.priority_row') %>
-    <%= form.select :priority, Task.priorities.keys.map { |key| [I18n.t("tasks.attributes.priority.#{key}"), key] } %>
+  <div class="mb-4">
+    <%= form.label :priority, t('tasks.attributes.priority_row'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.select :priority, Task.priorities.keys.map { |key| [I18n.t("tasks.attributes.priority.#{key}"), key] }, {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:priority].any? %>
-      <div class="error"><%= @task.errors[:priority].join(", ") %></div>
+      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:priority].join(", ") %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :status, t('tasks.attributes.status_row') %>
-    <%= form.select :status, Task.statuses.keys.map { |key| [I18n.t("tasks.attributes.status.#{key}"), key] } %>
+  <div class="mb-4">
+    <%= form.label :status, t('tasks.attributes.status_row'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.select :status, Task.statuses.keys.map { |key| [I18n.t("tasks.attributes.status.#{key}"), key] }, {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:status].any? %>
-      <div class="error"><%= @task.errors[:status].join(", ") %></div>
+      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:status].join(", ") %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :label, t('tasks.attributes.label') %>
-    <%= form.text_field :label %>
+  <div class="mb-4">
+    <%= form.label :label, t('tasks.attributes.label'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :label, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:label].any? %>
-      <div class="error"><%= @task.errors[:label].join(", ") %></div>
+      <div class="text-red-500 text-sm mt-2"><%= @task.errors[:label].join(", ") %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.submit t('tasks.submit') %>
+  <div class="flex justify-center space-x-4">
+    <%= form.submit t('tasks.submit'), class: "bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 cursor-pointer" %>
+    <%= link_to t('tasks.back'), tasks_path, class: "bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 inline-block" %>
   </div>
 <% end %>
