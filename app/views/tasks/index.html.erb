@@ -1,39 +1,50 @@
-<h1><%= t('tasks.new') %></h1>
-<%= link_to t('tasks.new'), new_task_path %>
-<%= form_with url: tasks_path, method: :get, local: true do %>
-  <div>
-    <label for="name"><%= t('tasks.search_by_name') %>:</label>
-    <%= text_field_tag :name, params[:name]%>
-    <%= submit_tag t('tasks.button.search_by_name') %>
+<div class="container mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-4 text-center"><%= t('tasks.new') %></h1>
+  <div class="text-center mb-4">
+    <%= link_to t('tasks.new'), new_task_path, class: "bg-blue-500 text-white py-2 px-4 rounded mb-4 inline-block hover:bg-blue-600 cursor-pointer" %>
   </div>
-  <div>
-    <label for="status"><%= t('tasks.filter_by_status') %>:</label>
-    <%= select_tag :status, status_filter_options(params[:status]), onchange: 'this.form.submit();' %>
-  </div>
-  <div>
-    <label for="sort_order"><%= t('tasks.sort_by') %>:</label>
-    <%= select_tag :sort_order, sort_options(@sort_order), onchange: 'this.form.submit();' %>
-  </div>
-<% end %>
-<ul>
-  <% @tasks.each do |task| %>
-    <li id="<%= dom_id(task)%>">
-      <%= link_to task.name, task %>
-      <%= link_to t('tasks.edit'), edit_task_path(task) %>
-      <%= link_to t('tasks.destroy'), task, data: {
-                    turbo_method: :delete,
-                    turbo_confirm: t('tasks.destroy_confirm'),
-                  } %>
-      <br>
-      <%= t('tasks.attributes.status_row') %>: <%= t("tasks.attributes.status.#{task.status}") %>
-      <br>
-      <%= t('tasks.attributes.priority_row') %>: <%= t("tasks.attributes.priority.#{task.priority}") %>
-      <br>
-      <%= t('tasks.attributes.created_at') %>: <%= task.created_at %>
-      <br>
-      <%= t('tasks.attributes.end_time') %>: <%= task.end_time %>
-    </li>
+  <%= form_with url: tasks_path, method: :get, local: true, class: "mb-4 mx-auto max-w-4xl" do %>
+    <div class="mb-4">
+      <label for="name" class="block text-sm font-medium text-gray-700"><%= t('tasks.search_by_name') %>:</label>
+      <%= text_field_tag :name, params[:name], class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+      <%= submit_tag t('tasks.button.search_by_name'), class: "bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 cursor-pointer" %>
+    </div>
+    <div class="mb-4">
+      <label for="status" class="block text-sm font-medium text-gray-700"><%= t('tasks.filter_by_status') %>:</label>
+      <%= select_tag :status, status_filter_options(params[:status]), class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
+    </div>
+    <div class="mb-4">
+      <label for="sort_order" class="block text-sm font-medium text-gray-700"><%= t('tasks.sort_by') %>:</label>
+      <%= select_tag :sort_order, sort_options(@sort_order), class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
+    </div>
   <% end %>
-</ul>
+  
+  <div class="flex justify-center">
+    <ul class="space-y-4 w-full max-w-4xl">
+      <% @tasks.each do |task| %>
+        <li id="<%= dom_id(task)%>" class="border border-gray-300 rounded-md p-4 shadow-sm">
+          <div class="flex justify-between items-center">
+            <%= link_to task.name, task, class: "text-lg font-semibold text-blue-600 hover:underline cursor-pointer" %>
+            <div class="space-x-2">
+              <%= link_to t('tasks.edit'), edit_task_path(task), class: "bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 cursor-pointer" %>
+              <%= link_to t('tasks.destroy'), task, data: { turbo_method: :delete, turbo_confirm: t('tasks.destroy_confirm') }, class: "bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 cursor-pointer" %>
+            </div>
+          </div>
+          <div class="mt-2 text-sm text-gray-700">
+            <%= t('tasks.attributes.status_row') %>: <%= t("tasks.attributes.status.#{task.status}") %>
+            <br>
+            <%= t('tasks.attributes.priority_row') %>: <%= t("tasks.attributes.priority.#{task.priority}") %>
+            <br>
+            <%= t('tasks.attributes.created_at') %>: <%= task.created_at %>
+            <br>
+            <%= t('tasks.attributes.end_time') %>: <%= task.end_time %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 
-<%= paginate @tasks %>
+  <div class="mt-4 flex justify-center">
+    <%= paginate @tasks %>
+  </div>
+</div>
