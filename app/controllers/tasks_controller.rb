@@ -3,10 +3,9 @@
 # TaskController handles the CRUD operations for tasks
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
+  before_action :set_sort_options, only: :index
 
   def index
-    @sort_order = params[:sort_order] || 'created_at'
-    @sort_direction = params[:sort_direction] || 'asc'
     @tasks = TaskSorter.sort(Task.all, @sort_order, @sort_direction)
   end
 
@@ -42,12 +41,34 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
     redirect_to root_path, notice: I18n.t('tasks.destroyed_successfully')
   end
 
   private
+
+  def set_sort_options
+    @sort_order = params[:sort_order] || 'created_at'
+    @sort_direction = params[:sort_direction] || 'asc'
+    @sort_order_options = sort_order_options
+    @sort_direction_options = sort_direction_options
+  end
+
+  def sort_order_options
+    {
+      I18n.t('tasks.sort_options.created_at') => 'created_at',
+      I18n.t('tasks.sort_options.end_time') => 'end_time',
+      I18n.t('tasks.sort_options.priority') => 'priority',
+      I18n.t('tasks.sort_options.status') => 'status'
+    }
+  end
+
+  def sort_direction_options
+    {
+      I18n.t('tasks.sort_directions.asc') => 'asc',
+      I18n.t('tasks.sort_directions.desc') => 'desc'
+    }
+  end
 
   def find_task
     @task = Task.find(params[:id])

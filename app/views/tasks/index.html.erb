@@ -2,10 +2,10 @@
 <%= link_to t('tasks.new'), new_task_path %>
 <%= form_with url: tasks_path, method: :get, local: true do %>
   <%= label_tag :sort_order, t('tasks.sort_by') %>:
-  <%= select_tag :sort_order, options_for_select(sort_order_options, @sort_order), onchange: 'this.form.submit();' %>
+  <%= select_tag :sort_order, options_for_select(@sort_order_options, @sort_order), onchange: 'this.form.submit();' %>
 
   <%= label_tag :sort_direction, t('tasks.sort_direction') %>:
-  <%= select_tag :sort_direction, options_for_select(sort_direction_options, @sort_direction), onchange: 'this.form.submit();' %>
+  <%= select_tag :sort_direction, options_for_select(@sort_direction_options, @sort_direction), onchange: 'this.form.submit();' %>
 <% end %>
 <ul>
   <% @tasks.each do |task| %>
