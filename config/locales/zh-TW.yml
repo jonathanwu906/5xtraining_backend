@@ -6,7 +6,9 @@ zh-TW:
     edit: "編輯"
     destroy: "刪除"
     created_successfully: "成功建立任務！"
+    created_failed: "任務建立失敗！"
     updated_successfully: "成功更新任務！"
+    updated_failed: "任務更新失敗！"
     destroyed_successfully: "成功刪除任務！"
     destroy_confirm: "確定要刪除此任務？"
     attributes:
@@ -27,6 +29,7 @@ zh-TW:
         completed: "已完成"
       label: "標籤"
     submit: "送出"
+    update: "更新"
     sort_by: "排序方式"
     all_status: "全部"
     search_by_name: "依名稱查詢"
