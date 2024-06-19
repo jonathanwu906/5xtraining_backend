@@ -85,4 +85,4 @@ gem 'dotenv-rails'
 # Step 17: 安裝 Kaminari
 gem 'kaminari'
 
-gem "tailwindcss-rails", "~> 2.6"
+gem 'tailwindcss-rails', '~> 2.6'
