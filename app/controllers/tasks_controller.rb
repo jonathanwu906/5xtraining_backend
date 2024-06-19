@@ -51,7 +51,8 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to root_path, notice: I18n.t('tasks.destroyed_successfully')
+    flash[:success] = I18n.t('tasks.destroyed_successfully')
+    redirect_to root_path
   end
 
   private
