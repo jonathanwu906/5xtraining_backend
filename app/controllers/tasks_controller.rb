@@ -5,7 +5,14 @@ class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.order(created_at: :asc)
+    @sort_order = params[:sort_order] || 'created_at'
+    @status = params[:status]
+    @name_query = params[:name]
+
+    @tasks = Task.includes(:user).page params[:page]
+    @tasks = search_by_name(@tasks)
+    @tasks = filter_by_status(@tasks)
+    @tasks = sort_tasks(@tasks)
   end
 
   def show; end
@@ -21,20 +28,22 @@ class TasksController < ApplicationController
     user = User.first
     @task = user.tasks.build(task_params)
     if @task.save
-      flash[:notice] = I18n.t('tasks.created_successfully')
+      flash[:success] = I18n.t('tasks.created_successfully')
       redirect_to action: :show, id: @task.id
     else
-      flash[:notice] = '任務建立失敗！' # rubocop:disable Rails/I18nLocaleTexts
+      flash[:alert] = I18n.t('tasks.created_failed')
+      flash.discard
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @task.update(task_params)
-      flash[:notice] = I18n.t('tasks.updated_successfully')
+      flash[:success] = I18n.t('tasks.updated_successfully')
       redirect_to action: :show, id: @task.id
     else
-      flash[:notice] = '任務更新失敗！' # rubocop:disable Rails/I18nLocaleTexts
+      flash[:alert] = I18n.t('tasks.updated_failed')
+      flash.discard
       render :edit, status: :unprocessable_entity
     end
   end
@@ -42,7 +51,8 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to root_path, notice: I18n.t('tasks.destroyed_successfully')
+    flash[:success] = I18n.t('tasks.destroyed_successfully')
+    redirect_to root_path
   end
 
   private
@@ -54,5 +64,17 @@ class TasksController < ApplicationController
   def task_params
     allowed_params = %i[name content start_time end_time priority status label]
     params.require(:task).permit(*allowed_params)
+  end
+
+  def sort_tasks(tasks)
+    tasks.order(@sort_order => :asc)
+  end
+
+  def search_by_name(tasks)
+    @name_query.present? ? tasks.where('name ILIKE ?', "%#{@name_query}%") : tasks
+  end
+
+  def filter_by_status(tasks)
+    @status.present? ? tasks.where(status: @status) : tasks
   end
 end
