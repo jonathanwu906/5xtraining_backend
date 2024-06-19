@@ -58,7 +58,7 @@ RSpec.describe 'Tasks' do
 
     context 'when sorting by created time' do
       before do
-        select I18n.t('tasks.sort_by_created_at'), from: 'sort_order'
+        select I18n.t('tasks.sort_options.created_time'), from: 'sort_order'
       end
 
       it 'sorts task by created time in ascending order' do
@@ -70,7 +70,7 @@ RSpec.describe 'Tasks' do
 
     context 'when sorting by end time' do
       before do
-        select I18n.t('tasks.sort_by_end_time'), from: 'sort_order'
+        select I18n.t('tasks.sort_options.end_time'), from: 'sort_order'
       end
 
       it 'sorts task by end time in ascending order' do
