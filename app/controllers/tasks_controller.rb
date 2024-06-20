@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   def index
     set_sort_options
-    @tasks = Task.future.order(@current_order)
+    @tasks = Task.not_expired.order(@current_order)
   end
 
   def show; end
