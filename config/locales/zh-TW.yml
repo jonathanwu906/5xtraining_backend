@@ -9,6 +9,9 @@ zh-TW:
     updated_successfully: "成功更新任務！"
     destroyed_successfully: "成功刪除任務！"
     destroy_confirm: "確定要刪除此任務？"
+    button:
+      start_time: "開始時間"
+      end_time: "結束時間" 
     attributes:
       name: "名稱"
       content: "內容"
@@ -25,6 +28,8 @@ zh-TW:
         pending: "待處理"
         in_progress: "進行中"
         completed: "已完成"
+        expired: "已過期"
+      display_status: "狀態: %{status}"
       label: "標籤"
     submit: "送出"
     sort_by: "排序方式"

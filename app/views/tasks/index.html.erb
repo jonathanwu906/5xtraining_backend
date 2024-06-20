@@ -14,6 +14,8 @@
                     turbo_confirm: t('tasks.destroy_confirm')
                   } %>
       <br>
+      <%= t('tasks.attributes.display_status', status: t("tasks.attributes.status.#{task.status}")) %>
+      <br>
       <%= t('tasks.attributes.created_at', time: task.created_at) %>
       <br>
       <%= t('tasks.attributes.end_time', time: task.end_time) %>
