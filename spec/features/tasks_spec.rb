@@ -43,7 +43,7 @@ RSpec.describe 'Tasks' do
     end
 
     before { visit tasks_path }
-    
+
     it 'displays tasks in ascending order of creation date' do
       tasks.each_cons(2) do |task_earlier, task_later|
         expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
@@ -59,7 +59,6 @@ RSpec.describe 'Tasks' do
     context 'when sorting by created time' do
       before do
         select I18n.t('tasks.sort_options.created_at'), from: 'sort_order'
-        select I18n.t('tasks.sort_directions.asc'), from: 'sort_direction'
       end
 
       it 'sorts task by created time in ascending order' do
@@ -72,7 +71,6 @@ RSpec.describe 'Tasks' do
     context 'when sorting by end time' do
       before do
         select I18n.t('tasks.sort_options.end_time'), from: 'sort_order'
-        select I18n.t('tasks.sort_directions.asc'), from: 'sort_direction'
       end
 
       it 'sorts task by end time in ascending order' do
