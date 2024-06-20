@@ -28,16 +28,9 @@ zh-TW:
       label: "標籤"
     submit: "送出"
     sort_by: "排序方式"
-    sort_direction: "排序方向"
-    sort_directions:
-      asc: "升序"
-      desc: "降序"
     sort_options:
       created_at: "建立時間"
       end_time: "結束時間"
-      start_time: "開始時間"
-      priority: "優先程度"
-      status: "狀態"
   date:
     abbr_day_names:
       - 週日
