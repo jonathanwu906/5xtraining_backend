@@ -37,8 +37,8 @@ RSpec.describe 'Tasks' do
 
   describe '#index' do
     let!(:tasks) do
-      3.downto(1).map do |i|
-        travel_to(i.days.ago) { create(:task) }
+      1.upto(3).map do |i|
+        travel_to(i.days.from_now) { create(:task) }
       end
     end
 

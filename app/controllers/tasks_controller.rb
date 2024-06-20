@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   def index
     set_sort_options
-    @tasks = Task.order(@current_order)
+    @tasks = Task.where('end_time > ?', Time.current).order(@current_order)
   end
 
   def show; end
@@ -42,10 +42,17 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to root_path, notice: I18n.t('tasks.destroyed_successfully')
+    flash[:notice] = I18n.t('tasks.destroyed_successfully')
+    redirect_to root_path
   end
 
   private
+
+  def update_expired_tasks
+    Task.where(end_time: ...Time.current).each do |task|
+      task.update(status: :expired)
+    end
+  end
 
   def set_sort_options
     @current_order = params[:sort_order] || 'created_at'
