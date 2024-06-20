@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   def index
     set_sort_options
-    @tasks = Task.where('end_time > ?', Time.current).order(@current_order)
+    @tasks = Task.future.order(@current_order)
   end
 
   def show; end
@@ -47,12 +47,6 @@ class TasksController < ApplicationController
   end
 
   private
-
-  def update_expired_tasks
-    Task.where(end_time: ...Time.current).each do |task|
-      task.update(status: :expired)
-    end
-  end
 
   def set_sort_options
     @current_order = params[:sort_order] || 'created_at'
