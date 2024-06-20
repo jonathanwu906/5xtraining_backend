@@ -3,10 +3,10 @@
 # TaskController handles the CRUD operations for tasks
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
-  before_action :set_sort_options, only: :index
 
   def index
-    @tasks = TaskSorter.sort(Task.all, @sort_order, @sort_direction)
+    set_sort_options
+    @tasks = Task.order(@current_order)
   end
 
   def show; end
@@ -48,26 +48,15 @@ class TasksController < ApplicationController
   private
 
   def set_sort_options
-    @sort_order = params[:sort_order] || 'created_at'
-    @sort_direction = params[:sort_direction] || 'asc'
+    @current_order = params[:sort_order] || 'created_at'
     @sort_order_options = sort_order_options
-    @sort_direction_options = sort_direction_options
   end
 
   def sort_order_options
-    {
-      I18n.t('tasks.sort_options.created_at') => 'created_at',
-      I18n.t('tasks.sort_options.end_time') => 'end_time',
-      I18n.t('tasks.sort_options.priority') => 'priority',
-      I18n.t('tasks.sort_options.status') => 'status'
-    }
-  end
-
-  def sort_direction_options
-    {
-      I18n.t('tasks.sort_directions.asc') => 'asc',
-      I18n.t('tasks.sort_directions.desc') => 'desc'
-    }
+    [
+      [I18n.t('tasks.sort_options.created_at'), 'created_at'],
+      [I18n.t('tasks.sort_options.end_time'), 'end_time']
+    ]
   end
 
   def find_task
