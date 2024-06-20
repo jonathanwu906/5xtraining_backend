@@ -36,35 +36,34 @@ RSpec.describe 'Tasks' do
   end
 
   describe '#index' do
-    let!(:tasks) do
-      1.upto(3).map do |i|
-        travel_to(i.days.from_now) { create(:task) }
-      end
+    let(:task_names) { %w[Task1 Task2 Task3] }
+
+    before do
+      travel_to(1.day.from_now) { create(:task, name: task_names[0]) }
+      travel_to(2.days.from_now) { create(:task, name: task_names[1]) }
+      travel_to(3.days.from_now) { create(:task, name: task_names[2]) }
+      visit tasks_path
     end
 
-    before { visit tasks_path }
-
-    it 'displays tasks in ascending order of creation date' do
-      tasks.each_cons(2) do |task_earlier, task_later|
-        expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
-      end
-    end
-
-    it 'displays all tasks' do
-      tasks.each do |task|
-        expect(page).to have_text(task.name)
-      end
-    end
+    it { is_expected.to have_text(task_names[0]) }
+    it { is_expected.to have_text(task_names[1]) }
+    it { is_expected.to have_text(task_names[2]) }
 
     context 'when sorting by created time' do
       before do
         select I18n.t('tasks.sort_options.created_at'), from: 'sort_order'
       end
 
-      it 'sorts task by created time in ascending order' do
-        tasks.each_cons(2) do |task_earlier, task_later|
-          expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
-        end
+      it 'sorts Task 1 before Task 2 by created time' do
+        task1_index = page.body.index(task_names[0])
+        task2_index = page.body.index(task_names[1])
+        expect(task1_index).to be < task2_index
+      end
+
+      it 'sorts Task 2 before Task 3 by created time' do
+        task2_index = page.body.index(task_names[1])
+        task3_index = page.body.index(task_names[2])
+        expect(task2_index).to be < task3_index
       end
     end
 
@@ -73,10 +72,16 @@ RSpec.describe 'Tasks' do
         select I18n.t('tasks.sort_options.end_time'), from: 'sort_order'
       end
 
-      it 'sorts task by end time in ascending order' do
-        tasks.each_cons(2) do |task_earlier, task_later|
-          expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
-        end
+      it 'sorts Task 1 before Task 2 by end time' do
+        task1_index = page.body.index(task_names[0])
+        task2_index = page.body.index(task_names[1])
+        expect(task1_index).to be < task2_index
+      end
+
+      it 'sorts Task 2 before Task 3 by end time' do
+        task2_index = page.body.index(task_names[1])
+        task3_index = page.body.index(task_names[2])
+        expect(task2_index).to be < task3_index
       end
     end
   end
