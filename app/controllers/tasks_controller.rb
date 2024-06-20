@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   def index
     set_sort_options
-    @tasks = Task.not_expired.order(@current_order)
+    @tasks = Task.active.order(@current_order)
   end
 
   def show; end
