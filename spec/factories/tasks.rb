@@ -7,7 +7,7 @@ FactoryBot.define do
     start_time { Time.zone.now }
     end_time { start_time + duration }
     priority { %w[low medium high].sample }
-    status { %w[pending in_progress completed].sample }
+    status { 'in_progress' }
     label { Faker::Lorem.word }
 
     user
