@@ -5,14 +5,12 @@ class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
 
   def index
-    @sort_order = params[:sort_order] || 'created_at'
-    @status = params[:status]
-    @name_query = params[:name]
-
-    @tasks = Task.all
-    @tasks = search_by_name(@tasks)
-    @tasks = filter_by_status(@tasks)
-    @tasks = sort_tasks(@tasks)
+    set_sort_options
+    set_status_options
+    @tasks = Task.in_processing
+                 .with_name(params[:name_query])
+                 .where(status: @status)
+                 .order(@current_order)
   end
 
   def show; end
@@ -47,12 +45,37 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
-    redirect_to root_path, notice: I18n.t('tasks.destroyed_successfully')
+    flash[:notice] = I18n.t('tasks.destroyed_successfully')
+    redirect_to root_path
   end
 
   private
+
+  def set_sort_options
+    @current_order = params[:sort_order] || 'created_at'
+    @sort_order_options = sort_order_options
+  end
+
+  def sort_order_options
+    [
+      [I18n.t('tasks.sort_options.created_at'), 'created_at'],
+      [I18n.t('tasks.sort_options.end_time'), 'end_time']
+    ]
+  end
+
+  def set_status_options
+    @status = params[:status] || 'in_progress'
+    @status_filter_options = status_filter_options
+  end
+
+  def status_filter_options
+    [
+      [I18n.t('tasks.status_options.in_progress'), 'in_progress'],
+      [I18n.t('tasks.status_options.pending'), 'pending'],
+      [I18n.t('tasks.status_options.completed'), 'completed']
+    ]
+  end
 
   def find_task
     @task = Task.find(params[:id])
@@ -61,17 +84,5 @@ class TasksController < ApplicationController
   def task_params
     allowed_params = %i[name content start_time end_time priority status label]
     params.require(:task).permit(*allowed_params)
-  end
-
-  def sort_tasks(tasks)
-    tasks.order(@sort_order => :asc)
-  end
-
-  def search_by_name(tasks)
-    @name_query.present? ? tasks.where('name ILIKE ?', "%#{@name_query}%") : tasks
-  end
-
-  def filter_by_status(tasks)
-    @status.present? ? tasks.where(status: @status) : tasks
   end
 end

@@ -12,7 +12,6 @@ class Task < ApplicationRecord
   validates :label, length: { maximum: 30 }, allow_blank: true
   enum :priority, { high: 0, medium: 1, low: 2 }
   enum :status, { pending: 0, in_progress: 1, completed: 2 }
-
-  scope :search_by_name, ->(name) { where('name ILIKE ?', "%#{name}%") if name.present? }
-  scope :filter_by_status, ->(status) { where(status:) if status.present? }
+  scope :in_processing, -> { where('end_time > ?', Time.current) }
+  scope :with_name, ->(name_query) { where('name ILIKE ?', "%#{name_query}%") }
 end
