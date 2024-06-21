@@ -1,14 +1,24 @@
 <h1><%= t('tasks.new') %></h1>
 <%= link_to t('tasks.new'), new_task_path %>
+<%= form_with url: tasks_path, method: :get, local: true do %>
+  <%= label_tag :sort_order, t('tasks.sort_by') %>:
+  <%= select_tag :sort_order, options_for_select(@sort_order_options, @current_order), onchange: 'this.form.submit();' %>
+<% end %>
 <ul>
   <% @tasks.each do |task| %>
-    <li id="<%= dom_id(task)%>">
+    <li id="<%= dom_id(task) %>">
       <%= link_to task.name, task %>
       <%= link_to t('tasks.edit'), edit_task_path(task) %>
       <%= link_to t('tasks.destroy'), task, data: {
                     turbo_method: :delete,
-                    turbo_confirm: t('tasks.destroy_confirm'),
+                    turbo_confirm: t('tasks.destroy_confirm')
                   } %>
+      <br>
+      <%= t('tasks.attributes.display_status', status: t("tasks.attributes.status.#{task.status}")) %>
+      <br>
+      <%= t('tasks.attributes.created_at', time: task.created_at) %>
+      <br>
+      <%= t('tasks.attributes.end_time', time: task.end_time) %>
     </li>
   <% end %>
 </ul>

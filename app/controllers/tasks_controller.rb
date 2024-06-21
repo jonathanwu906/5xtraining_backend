@@ -5,7 +5,8 @@ class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.order(created_at: :asc)
+    set_sort_options
+    @tasks = Task.in_processing.order(@current_order)
   end
 
   def show; end
@@ -40,12 +41,24 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
-    redirect_to root_path, notice: I18n.t('tasks.destroyed_successfully')
+    flash[:notice] = I18n.t('tasks.destroyed_successfully')
+    redirect_to root_path
   end
 
   private
+
+  def set_sort_options
+    @current_order = params[:sort_order] || 'created_at'
+    @sort_order_options = sort_order_options
+  end
+
+  def sort_order_options
+    [
+      [I18n.t('tasks.sort_options.created_at'), 'created_at'],
+      [I18n.t('tasks.sort_options.end_time'), 'end_time']
+    ]
+  end
 
   def find_task
     @task = Task.find(params[:id])
