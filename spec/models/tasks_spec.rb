@@ -33,7 +33,7 @@ RSpec.describe Task do
     context 'when searching by name' do
       let(:task_name) { Faker::Lorem.word }
       let!(:matching_task) { create(:task, name: task_name, user:) }
-      let(:result) { described_class.search_by_name(task_name) }
+      let(:result) { described_class.with_name(task_name) }
 
       it 'includes tasks matching the name query' do
         expect(result).to include(matching_task)
@@ -41,12 +41,12 @@ RSpec.describe Task do
     end
 
     context 'when filtering by status' do
-      let(:status) { %w[pending in_progress completed].sample }
-      let!(:selected_status) { create(:task, user:, status:) }
-      let(:result) { described_class.filter_by_status(status) }
+      let(:selected_status) { %w[pending in_progress completed].sample }
+      let!(:task_with_selected_status) { create(:task, user:, status: selected_status) }
+      let(:result) { described_class.where(status: selected_status) }
 
       it 'includes tasks with the correct status' do
-        expect(result).to include(selected_status)
+        expect(result).to include(task_with_selected_status)
       end
     end
   end
