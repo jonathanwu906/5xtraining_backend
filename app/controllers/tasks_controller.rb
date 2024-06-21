@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   def index
     set_sort_options
-    @tasks = Task.ongoing_and_upcoming.order(@current_order)
+    @tasks = Task.in_processing.order(@current_order)
   end
 
   def show; end
