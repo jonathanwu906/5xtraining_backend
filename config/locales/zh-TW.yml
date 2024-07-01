@@ -1,4 +1,14 @@
 zh-TW:
+  activerecord:
+    models:
+      task: "任務"
+    attributes:
+      task:
+        status: "狀態"
+        all: "全部"
+        pending: "待處理"
+        in_progress: "進行中"
+        completed: "已完成"
   tasks:
     back: "返回"
     title: "任務"
