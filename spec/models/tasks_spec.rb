@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Task do
-  let(:user) { User.first }
+  let(:user) { create(:user) }
 
   describe 'validations' do
     subject { build(:task, user:) }
@@ -27,5 +27,27 @@ RSpec.describe Task do
 
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
+  end
+
+  describe 'scopes and queries' do
+    context 'when searching by name' do
+      let(:task_name) { Faker::Lorem.word }
+      let!(:matching_task) { create(:task, name: task_name, user:) }
+      let(:result) { described_class.search_by_name(task_name) }
+
+      it 'includes tasks matching the name query' do
+        expect(result).to include(matching_task)
+      end
+    end
+
+    context 'when filtering by status' do
+      let(:status) { %w[pending in_progress completed].sample }
+      let!(:selected_status) { create(:task, user:, status:) }
+      let(:result) { described_class.filter_by_status(status) }
+
+      it 'includes tasks with the correct status' do
+        expect(result).to include(selected_status)
+      end
+    end
   end
 end

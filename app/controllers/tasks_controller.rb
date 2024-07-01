@@ -3,10 +3,17 @@
 # TaskController handles the CRUD operations for tasks
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
+  before_action :require_login
 
   def index
-    set_sort_options
-    @tasks = Task.in_processing.order(@current_order)
+    @sort_order = params[:sort_order] || 'created_at'
+    @status = params[:status]
+    @name_query = params[:name]
+
+    @tasks = current_user.tasks.page params[:page]
+    @tasks = search_by_name(@tasks)
+    @tasks = filter_by_status(@tasks)
+    @tasks = sort_tasks(@tasks)
   end
 
   def show; end
@@ -19,46 +26,36 @@ class TasksController < ApplicationController
 
   def create
     # TODO: 之後會改成登入後從 session 取得 user
-    user = User.first
-    @task = user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
-      flash[:notice] = I18n.t('tasks.created_successfully')
+      flash[:success] = I18n.t('tasks.created_successfully')
       redirect_to action: :show, id: @task.id
     else
-      flash[:notice] = '任務建立失敗！' # rubocop:disable Rails/I18nLocaleTexts
+      flash[:alert] = I18n.t('tasks.created_failed')
+      flash.discard
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @task.update(task_params)
-      flash[:notice] = I18n.t('tasks.updated_successfully')
+      flash[:success] = I18n.t('tasks.updated_successfully')
       redirect_to action: :show, id: @task.id
     else
-      flash[:notice] = '任務更新失敗！' # rubocop:disable Rails/I18nLocaleTexts
+      flash[:alert] = I18n.t('tasks.updated_failed')
+      flash.discard
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
+    @task = Task.find(params[:id])
     @task.destroy
-    flash[:notice] = I18n.t('tasks.destroyed_successfully')
+    flash[:success] = I18n.t('tasks.destroyed_successfully')
     redirect_to root_path
   end
 
   private
-
-  def set_sort_options
-    @current_order = params[:sort_order] || 'created_at'
-    @sort_order_options = sort_order_options
-  end
-
-  def sort_order_options
-    [
-      [I18n.t('tasks.sort_options.created_at'), 'created_at'],
-      [I18n.t('tasks.sort_options.end_time'), 'end_time']
-    ]
-  end
 
   def find_task
     @task = Task.find(params[:id])
@@ -67,5 +64,17 @@ class TasksController < ApplicationController
   def task_params
     allowed_params = %i[name content start_time end_time priority status label]
     params.require(:task).permit(*allowed_params)
+  end
+
+  def sort_tasks(tasks)
+    tasks.order(@sort_order => :asc)
+  end
+
+  def search_by_name(tasks)
+    @name_query.present? ? tasks.where('name ILIKE ?', "%#{@name_query}%") : tasks
+  end
+
+  def filter_by_status(tasks)
+    @status.present? ? tasks.where(status: @status) : tasks
   end
 end
