@@ -6,10 +6,7 @@ class TasksController < ApplicationController
   helper_method :sort_order_options, :status_filter_options
 
   def index
-    @tasks = Task.in_processing
-                 .with_name(params[:name_query])
-                 .with_status(params[:status])
-                 .order(params[:sort_order] || 'created_at')
+    @tasks = fetch_tasks
   end
 
   def show; end
@@ -50,6 +47,14 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def fetch_tasks
+    tasks = Task.in_processing
+                .with_name(params[:name_query])
+                .order(params[:sort_order] || 'created_at')
+    tasks = tasks.with_status(params[:status]) if params[:status].present?
+    tasks
+  end
 
   def sort_order_options
     [
