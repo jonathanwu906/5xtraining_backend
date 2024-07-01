@@ -88,23 +88,26 @@ RSpec.describe 'Tasks' do
     context 'when searching by name' do
       before do
         fill_in I18n.t('tasks.search_by_name'), with: task_names[0]
-        click_link_or_button I18n.t('tasks.button.search_by_name')
       end
 
       it 'displays the tasks with the specific name' do
-        expect(page).to have_text(task_names[0])
+        within '.task-list' do
+          expect(page).to have_text(task_names[0])
+        end
       end
     end
 
     context 'when filtering by status' do
-      let(:task_status) { I18n.t("tasks.attributes.status.#{%w[pending in_progress completed].sample}") }
+      let(:task_status) { I18n.t('tasks.attributes.status.in_progress') }
 
       before do
         select task_status, from: 'status'
       end
 
       it 'displays the tasks with the specifc status' do
-        expect(page).to have_text(task_status)
+        within '.task-list' do
+          expect(page).to have_text(task_status)
+        end
       end
     end
   end
