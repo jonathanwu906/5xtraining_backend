@@ -3,19 +3,18 @@
 <%= form_with url: tasks_path, method: :get, local: true do %>
   <div>
     <%= label_tag :name_query, t('tasks.search_by_name') %>
-    <%= text_field_tag :name_query, params[:name_query] %>
-    <%= submit_tag t('tasks.button.search_by_name') %>
+    <%= text_field_tag :name_query, params[:name_query], oninput: 'this.form.submit();' %>
   </div>
   <div>
     <%= label_tag :status, t('tasks.filter_by_status') %>
-    <%= select_tag :status, options_for_select(@status_filter_options, params[:status]), onchange: 'this.form.submit();' %>
+    <%= select_tag :status, options_for_select(status_filter_options, params[:status]), onchange: 'this.form.submit();' %>
   </div>
   <div>
     <%= label_tag :sort_order, t('tasks.sort_by') %>
-    <%= select_tag :sort_order, options_for_select(@sort_order_options, @current_order), onchange: 'this.form.submit();' %>
+    <%= select_tag :sort_order, options_for_select(sort_order_options, params[:sort_order]), onchange: 'this.form.submit();' %>
   </div>
 <% end %>
-<ul>
+<ul class='task-list'>
   <% @tasks.each do |task| %>
     <li id="<%= dom_id(task) %>">
       <%= link_to task.name, task %>
