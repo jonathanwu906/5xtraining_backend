@@ -3,13 +3,14 @@
 # TaskController handles the CRUD operations for tasks
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
+  before_action :require_login
 
   def index
     @sort_order = params[:sort_order] || 'created_at'
     @status = params[:status]
     @name_query = params[:name]
 
-    @tasks = Task.includes(:user).page params[:page]
+    @tasks = current_user.tasks.page params[:page]
     @tasks = search_by_name(@tasks)
     @tasks = filter_by_status(@tasks)
     @tasks = sort_tasks(@tasks)
@@ -25,8 +26,7 @@ class TasksController < ApplicationController
 
   def create
     # TODO: 之後會改成登入後從 session 取得 user
-    user = User.first
-    @task = user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       flash[:success] = I18n.t('tasks.created_successfully')
       redirect_to action: :show, id: @task.id

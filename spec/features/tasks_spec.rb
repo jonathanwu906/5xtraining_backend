@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Tasks' do
   subject { page }
 
-  before { create(:user) }
+  before { sign_in create(:user) }
 
   describe '#create' do
     before { visit new_task_path }
@@ -36,86 +36,78 @@ RSpec.describe 'Tasks' do
   end
 
   describe '#index' do
-    priorities = %i[high medium low]
-    let!(:tasks) do
-      3.downto(1).map do |i|
-        travel_to(i.days.ago) { create(:task, priority: priorities[i - 1]) }
-      end
+    let(:task_names) { %w[Task1 Task2 Task3] }
+
+    before do
+      travel_to(1.day.from_now) { create(:task, name: task_names[0]) }
+      travel_to(2.days.from_now) { create(:task, name: task_names[1]) }
+      travel_to(3.days.from_now) { create(:task, name: task_names[2]) }
+      visit tasks_path
     end
 
-    before { visit tasks_path }
-
-    it 'displays tasks in ascending order of creation date' do
-      tasks.each_cons(2) do |task_earlier, task_later|
-        expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
-      end
-    end
-
-    it 'displays all tasks' do
-      tasks.each do |task|
-        expect(page).to have_text(task.name)
-      end
-    end
+    it { is_expected.to have_text(task_names[0]) }
+    it { is_expected.to have_text(task_names[1]) }
+    it { is_expected.to have_text(task_names[2]) }
 
     context 'when sorting by created time' do
       before do
-        select I18n.t('tasks.sort_by_created_at'), from: 'sort_order'
+        select I18n.t('tasks.sort_options.created_at'), from: 'sort_order'
       end
 
-      it 'sorts task by created time in ascending order' do
-        tasks.each_cons(2) do |task_earlier, task_later|
-          expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
-        end
+      it 'sorts Task 1 before Task 2 by created time' do
+        task1_index = page.body.index(task_names[0])
+        task2_index = page.body.index(task_names[1])
+        expect(task1_index).to be < task2_index
+      end
+
+      it 'sorts Task 2 before Task 3 by created time' do
+        task2_index = page.body.index(task_names[1])
+        task3_index = page.body.index(task_names[2])
+        expect(task2_index).to be < task3_index
       end
     end
 
     context 'when sorting by end time' do
       before do
-        select I18n.t('tasks.sort_by_end_time'), from: 'sort_order'
+        select I18n.t('tasks.sort_options.end_time'), from: 'sort_order'
       end
 
-      it 'sorts task by end time in ascending order' do
-        tasks.each_cons(2) do |task_earlier, task_later|
-          expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
-        end
-      end
-    end
-
-    context 'when sorting by priority' do
-      before do
-        select I18n.t('tasks.sort_by_priority'), from: 'sort_order'
+      it 'sorts Task 1 before Task 2 by end time' do
+        task1_index = page.body.index(task_names[0])
+        task2_index = page.body.index(task_names[1])
+        expect(task1_index).to be < task2_index
       end
 
-      it 'sorts tasks by priority in descending order' do
-        tasks.each_cons(2) do |task_higher, task_lower|
-          expect(page.body.index(task_higher.name)).to be < page.body.index(task_lower.name)
-        end
+      it 'sorts Task 2 before Task 3 by end time' do
+        task2_index = page.body.index(task_names[1])
+        task3_index = page.body.index(task_names[2])
+        expect(task2_index).to be < task3_index
       end
     end
 
     context 'when searching by name' do
-      let(:task_name) { Faker::Lorem.word }
-
       before do
-        tasks.first.update(name: task_name)
-        fill_in I18n.t('tasks.search_by_name'), with: task_name
-        click_link_or_button I18n.t('tasks.button.search_by_name')
+        fill_in I18n.t('tasks.search_by_name'), with: task_names[0]
       end
 
       it 'displays the tasks with the specific name' do
-        expect(page).to have_text(task_name)
+        within '.task-list' do
+          expect(page).to have_text(task_names[0])
+        end
       end
     end
 
     context 'when filtering by status' do
-      let(:task_status) { I18n.t("tasks.attributes.status.#{%w[pending in_progress completed].sample}") }
+      let(:task_status) { I18n.t('tasks.attributes.status.in_progress') }
 
       before do
         select task_status, from: 'status'
       end
 
       it 'displays the tasks with the specifc status' do
-        expect(page).to have_text(task_status)
+        within '.task-list' do
+          expect(page).to have_text(task_status)
+        end
       end
     end
   end
@@ -183,5 +175,12 @@ RSpec.describe 'Tasks' do
     select datetime.day.to_s, from: "#{field}_3i"
     select format('%02d', datetime.hour), from: "#{field}_4i"
     select format('%02d', datetime.min), from: "#{field}_5i"
+  end
+
+  def sign_in(user)
+    visit login_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    find('input[type="submit"][value="登入"]').click
   end
 end

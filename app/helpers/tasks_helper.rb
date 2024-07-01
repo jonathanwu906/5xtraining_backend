@@ -10,8 +10,8 @@ module TasksHelper # rubocop:disable Style/Documentation
   end
 
   def status_filter_options(selected_status)
-    options_for_select([[I18n.t('tasks.all_status'), nil]] + Task.statuses.keys.map do |status|
-                                                               [I18n.t("tasks.attributes.status.#{status}"), status]
-                                                             end, selected: selected_status)
+    options_for_select([[I18n.t('tasks.attributes.status.all'), nil]] + Task.statuses.keys.map do |status|
+                                                                          [I18n.t("tasks.attributes.status.#{status}"), status]
+                                                                        end, selected: selected_status)
   end
 end

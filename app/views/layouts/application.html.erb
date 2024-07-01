@@ -6,15 +6,23 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body class="bg-gray-100">
     <header>
       <nav class="bg-blue-600 p-4 text-white">
-        <div class="container mx-auto">
+        <div class="container mx-auto flex justify-between items-center">
           <%= link_to 'Task Manager', root_path, class: 'text-lg font-bold' %>
+          <div>
+            <% if logged_in? %>
+              <%= link_to '所有任務', tasks_path, class: 'mr-4' %>
+              <%= link_to '登出', logout_path, data: { turbo_method: :delete, turbo_confirm: '你確定要登出嗎？' }, class: 'mr-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' %>
+            <% else %>
+              <%= link_to '註冊', signup_path, class: 'mr-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' %>
+              <%= link_to '登入', login_path, class: 'mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+            <% end %>
+          </div>
         </div>
       </nav>
     </header>
