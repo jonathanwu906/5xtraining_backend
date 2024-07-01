@@ -91,7 +91,7 @@ RSpec.describe 'Tasks' do
       end
 
       it 'displays the tasks with the specific name' do
-        within '.task-list' do
+        within "##{dom_id(Task.find_by(name: task_names[0]))}" do
           expect(page).to have_text(task_names[0])
         end
       end
@@ -105,8 +105,10 @@ RSpec.describe 'Tasks' do
       end
 
       it 'displays the tasks with the specifc status' do
-        within '.task-list' do
-          expect(page).to have_text(task_status)
+        Task.where(status: 'in_progress').find_each do |task|
+          within "##{dom_id(task)}" do
+            expect(page).to have_text(task.name)
+          end
         end
       end
     end
