@@ -14,7 +14,7 @@
     <%= select_tag :sort_order, options_for_select(sort_order_options, params[:sort_order]), onchange: 'this.form.submit();' %>
   </div>
 <% end %>
-<ul class='task-list'>
+<ul>
   <% @tasks.each do |task| %>
     <li id="<%= dom_id(task) %>">
       <%= link_to task.name, task %>
@@ -24,7 +24,7 @@
                     turbo_confirm: t('tasks.destroy_confirm')
                   } %>
       <br>
-      <%= Task.human_attribute_name(task.status) %>
+      <%= "#{Task.human_attribute_name(:status)}: #{Task.human_attribute_name("#{task.status}")}" %>
       <br>
       <%= t('tasks.attributes.created_at', time: task.created_at) %>
       <br>
