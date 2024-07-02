@@ -95,23 +95,15 @@ RSpec.describe 'Tasks' do
         fill_in I18n.t('tasks.search_by_name'), with: first_complete_task.name
       end
 
-      it 'displays the tasks with the specific name' do
-        expect(page).to have_css("##{dom_id(Task.find_by(name: first_complete_task.name))}")
-      end
+      it { is_expected.to have_css("##{dom_id(first_complete_task)}", text: first_complete_task.name) }
     end
 
     context 'when filtering by status' do
-      let(:task_status) { I18n.t('tasks.attributes.status.in_progress') }
-
       before do
-        select task_status, from: 'status'
+        select I18n.t('tasks.attributes.status.in_progress'), from: 'status'
       end
 
-      it 'displays the tasks with the specifc status' do
-        Task.where(status: 'in_progress').find_each do |task|
-          expect(page).to have_css("##{dom_id(task)}", text: task.name)
-        end
-      end
+      it { is_expected.to have_css("##{dom_id(second_progress_task)}", text: second_progress_task.name) }
     end
   end
 
