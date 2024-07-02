@@ -3,10 +3,10 @@
 # TaskController handles the CRUD operations for tasks
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
+  helper_method :sort_order_options, :status_filter_options
 
   def index
-    set_sort_options
-    @tasks = Task.in_processing.order(@current_order)
+    @tasks = fetch_tasks
   end
 
   def show; end
@@ -48,15 +48,27 @@ class TasksController < ApplicationController
 
   private
 
-  def set_sort_options
-    @current_order = params[:sort_order] || 'created_at'
-    @sort_order_options = sort_order_options
+  def fetch_tasks
+    tasks = Task.in_processing
+                .with_name(params[:name_query])
+                .order(params[:sort_order] || 'created_at')
+    tasks = tasks.with_status(params[:status]) if params[:status].present?
+    tasks
   end
 
   def sort_order_options
     [
       [I18n.t('tasks.sort_options.created_at'), 'created_at'],
       [I18n.t('tasks.sort_options.end_time'), 'end_time']
+    ]
+  end
+
+  def status_filter_options
+    [
+      [I18n.t('tasks.status_options.all'), nil],
+      [I18n.t('tasks.status_options.in_progress'), 'in_progress'],
+      [I18n.t('tasks.status_options.pending'), 'pending'],
+      [I18n.t('tasks.status_options.completed'), 'completed']
     ]
   end
 
