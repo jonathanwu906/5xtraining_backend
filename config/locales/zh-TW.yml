@@ -1,4 +1,14 @@
 zh-TW:
+  activerecord:
+    models:
+      task: "任務"
+    attributes:
+      task:
+        status: "狀態"
+        all: "全部"
+        pending: "待處理"
+        in_progress: "進行中"
+        completed: "已完成"
   tasks:
     back: "返回"
     title: "任務"
@@ -9,12 +19,16 @@ zh-TW:
     updated_successfully: "成功更新任務！"
     destroyed_successfully: "成功刪除任務！"
     destroy_confirm: "確定要刪除此任務？"
+    button:
+      search_by_name: "查詢"
+      start_time: "開始時間"
+      end_time: "結束時間" 
     attributes:
       name: "名稱"
       content: "內容"
-      created_at: "建立時間"
-      start_time: "開始時間"
-      end_time: "結束時間"
+      created_at: "建立時間：%{time}"
+      start_time: "開始時間：%{time}"
+      end_time: "結束時間：%{time}"
       priority_row: "優先程度"
       priority: 
         low: "低"
@@ -25,17 +39,22 @@ zh-TW:
         pending: "待處理"
         in_progress: "進行中"
         completed: "已完成"
+        expired: "已過期"
+      displayed_status: "狀態: %{status}"
       label: "標籤"
     submit: "送出"
     sort_by: "排序方式"
     all_status: "全部"
     search_by_name: "依名稱查詢"
     filter_by_status: "依狀態查詢"
-    sort_by_created_at: "依建立時間"
-    sort_by_end_time: "依結束時間"
-    sort_by_priority: "依優先程度"
-    button:
-      search_by_name: "查詢"
+    sort_options:
+      created_at: "建立時間"
+      end_time: "結束時間"
+    status_options:
+      all: "全部"
+      pending: "待處理"
+      in_progress: "進行中"
+      completed: "已完成"
   date:
     abbr_day_names:
       - 週日

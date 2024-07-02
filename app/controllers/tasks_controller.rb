@@ -3,16 +3,10 @@
 # TaskController handles the CRUD operations for tasks
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
+  helper_method :sort_order_options, :status_filter_options
 
   def index
-    @sort_order = params[:sort_order] || 'created_at'
-    @status = params[:status]
-    @name_query = params[:name]
-
-    @tasks = Task.all
-    @tasks = search_by_name(@tasks)
-    @tasks = filter_by_status(@tasks)
-    @tasks = sort_tasks(@tasks)
+    @tasks = fetch_tasks
   end
 
   def show; end
@@ -47,12 +41,36 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
-    redirect_to root_path, notice: I18n.t('tasks.destroyed_successfully')
+    flash[:notice] = I18n.t('tasks.destroyed_successfully')
+    redirect_to root_path
   end
 
   private
+
+  def fetch_tasks
+    tasks = Task.in_processing
+                .with_name(params[:name_query])
+                .order(params[:sort_order] || 'created_at')
+    tasks = tasks.with_status(params[:status]) if params[:status].present?
+    tasks
+  end
+
+  def sort_order_options
+    [
+      [I18n.t('tasks.sort_options.created_at'), 'created_at'],
+      [I18n.t('tasks.sort_options.end_time'), 'end_time']
+    ]
+  end
+
+  def status_filter_options
+    [
+      [I18n.t('tasks.status_options.all'), nil],
+      [I18n.t('tasks.status_options.in_progress'), 'in_progress'],
+      [I18n.t('tasks.status_options.pending'), 'pending'],
+      [I18n.t('tasks.status_options.completed'), 'completed']
+    ]
+  end
 
   def find_task
     @task = Task.find(params[:id])

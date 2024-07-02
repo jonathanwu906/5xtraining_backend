@@ -16,7 +16,7 @@
   </div>
 
   <div>
-    <%= form.label :start_time, t('tasks.attributes.start_time') %>
+    <%= form.label :start_time, t('tasks.button.start_time') %>
     <%= form.datetime_select :start_time %>
     <% if @task.errors[:start_time].any? %>
       <div class="error"><%= @task.errors[:start_time].join(", ") %></div>
@@ -24,7 +24,7 @@
   </div>
 
   <div>
-    <%= form.label :end_time, t('tasks.attributes.end_time') %>
+    <%= form.label :end_time, t('tasks.button.end_time') %>
     <%= form.datetime_select :end_time %>
     <% if @task.errors[:end_time].any? %>
       <div class="error"><%= @task.errors[:end_time].join(", ") %></div>

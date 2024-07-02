@@ -36,25 +36,74 @@ RSpec.describe 'Tasks' do
   end
 
   describe '#index' do
-    priorities = %i[high medium low]
-    let!(:tasks) do
-      3.downto(1).map do |i|
-        travel_to(i.days.ago) { create(:task, priority: priorities[i - 1]) }
+    let!(:first_complete_task) do
+      travel_to(1.day.from_now) { create(:task, status: 2) }
+    end
+    let!(:second_progress_task) do
+      travel_to(2.days.from_now) { create(:task, status: 1) }
+    end
+    let!(:third_pending_task) do
+      travel_to(3.days.from_now) { create(:task, status: 0) }
+    end
+
+    before do
+      visit tasks_path
+    end
+
+    it { is_expected.to have_css("##{dom_id(first_complete_task)}", text: first_complete_task.name, count: 1) }
+    it { is_expected.to have_css("##{dom_id(second_progress_task)}", text: second_progress_task.name, count: 1) }
+    it { is_expected.to have_css("##{dom_id(third_pending_task)}", text: third_pending_task.name, count: 1) }
+
+    context 'when sorting by created time' do
+      before do
+        select I18n.t('tasks.sort_options.created_at'), from: 'sort_order'
+      end
+
+      it 'sorts Task 1 before Task 2 by created time' do
+        task1_index = page.body.index(first_complete_task.name)
+        task2_index = page.body.index(second_progress_task.name)
+        expect(task1_index).to be < task2_index
+      end
+
+      it 'sorts Task 2 before Task 3 by created time' do
+        task2_index = page.body.index(second_progress_task.name)
+        task3_index = page.body.index(third_pending_task.name)
+        expect(task2_index).to be < task3_index
       end
     end
 
-    before { visit tasks_path }
+    context 'when sorting by end time' do
+      before do
+        select I18n.t('tasks.sort_options.end_time'), from: 'sort_order'
+      end
 
-    it 'displays tasks in ascending order of creation date' do
-      tasks.each_cons(2) do |task_earlier, task_later|
-        expect(page.body.index(task_earlier.name)).to be < page.body.index(task_later.name)
+      it 'sorts Task 1 before Task 2 by end time' do
+        task1_index = page.body.index(first_complete_task.name)
+        task2_index = page.body.index(second_progress_task.name)
+        expect(task1_index).to be < task2_index
+      end
+
+      it 'sorts Task 2 before Task 3 by end time' do
+        task2_index = page.body.index(second_progress_task.name)
+        task3_index = page.body.index(third_pending_task.name)
+        expect(task2_index).to be < task3_index
       end
     end
 
-    it 'displays all tasks' do
-      tasks.each do |task|
-        expect(page).to have_text(task.name)
+    context 'when searching by name' do
+      before do
+        fill_in I18n.t('tasks.search_by_name'), with: first_complete_task.name
       end
+
+      it { is_expected.to have_css("##{dom_id(first_complete_task)}", text: first_complete_task.name) }
+    end
+
+    context 'when filtering by status' do
+      before do
+        select I18n.t('tasks.attributes.status.in_progress'), from: 'status'
+      end
+
+      it { is_expected.to have_css("##{dom_id(second_progress_task)}", text: second_progress_task.name) }
     end
 
     context 'when sorting by created time' do
