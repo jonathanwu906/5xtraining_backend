@@ -15,5 +15,17 @@ FactoryBot.define do
     transient do
       duration { 1.hour }
     end
+
+    trait :pending do
+      status { 'pending' }
+    end
+
+    trait :in_progress do
+      status { 'in_progress' }
+    end
+
+    trait :completed do
+      status { 'completed' }
+    end
   end
 end
