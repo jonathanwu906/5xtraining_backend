@@ -10,4 +10,13 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   resources :tasks
+
+  namespace :admin do
+    resources :users do
+      member do
+        get 'tasks'
+      end
+    end
+    root to: 'users#index'
+  end
 end
