@@ -1,0 +1,22 @@
+<h1>Tasks for <%= @user.name %></h1>
+<table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+  <thead class="bg-gray-200">
+    <tr>
+      <th class="py-2 px-4 text-left">Name</th>
+      <th class="py-2 px-4 text-left">Status</th>
+      <th class="py-2 px-4 text-left">Start Time</th>
+      <th class="py-2 px-4 text-left">End Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr class="border-b">
+        <td class="py-2 px-4"><%= task.name %></td>
+        <td class="py-2 px-4"><%= task.status %></td>
+        <td class="py-2 px-4"><%= task.start_time %></td>
+        <td class="py-2 px-4"><%= task.end_time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Back', admin_users_path, class: "inline-block bg-blue-500 text-white px-4 py-2 rounded-md mt-4" %>

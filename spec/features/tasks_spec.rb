@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Tasks' do
   subject { page }
 
-  before { create(:user) }
+  before { sign_in create(:user) }
 
   describe '#create' do
     before { visit new_task_path }
@@ -84,6 +84,32 @@ RSpec.describe 'Tasks' do
         expect(task2_index).to be < task3_index
       end
     end
+
+    context 'when searching by name' do
+      before do
+        fill_in I18n.t('tasks.search_by_name'), with: task_names[0]
+      end
+
+      it 'displays the tasks with the specific name' do
+        within '.task-list' do
+          expect(page).to have_text(task_names[0])
+        end
+      end
+    end
+
+    context 'when filtering by status' do
+      let(:task_status) { I18n.t('tasks.attributes.status.in_progress') }
+
+      before do
+        select task_status, from: 'status'
+      end
+
+      it 'displays the tasks with the specifc status' do
+        within '.task-list' do
+          expect(page).to have_text(task_status)
+        end
+      end
+    end
   end
 
   describe '#update' do
@@ -98,7 +124,7 @@ RSpec.describe 'Tasks' do
       before do
         fill_in I18n.t('tasks.attributes.name'), with: new_task_name
         fill_in I18n.t('tasks.attributes.content'), with: new_task_content
-        click_link_or_button I18n.t('tasks.submit')
+        click_link_or_button I18n.t('tasks.update')
       end
 
       it { is_expected.to have_text(I18n.t('tasks.updated_successfully')) }
@@ -109,7 +135,7 @@ RSpec.describe 'Tasks' do
     context 'when update fails' do
       before do
         fill_in I18n.t('tasks.attributes.name'), with: ''
-        click_link_or_button I18n.t('tasks.submit')
+        click_link_or_button I18n.t('tasks.update')
       end
 
       it { is_expected.to have_text(I18n.t('errors.messages.blank')) }
@@ -149,5 +175,12 @@ RSpec.describe 'Tasks' do
     select datetime.day.to_s, from: "#{field}_3i"
     select format('%02d', datetime.hour), from: "#{field}_4i"
     select format('%02d', datetime.min), from: "#{field}_5i"
+  end
+
+  def sign_in(user)
+    visit login_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    find('input[type="submit"][value="登入"]').click
   end
 end
