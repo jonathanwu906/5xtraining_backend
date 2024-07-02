@@ -10,7 +10,8 @@ class TasksController < ApplicationController
     @status = params[:status]
     @name_query = params[:name]
 
-    @tasks = current_user.tasks.page params[:page]
+    @tasks = current_user.admin? ? Task.all : current_user.tasks
+    @tasks = @tasks.page(params[:page])
     @tasks = search_by_name(@tasks)
     @tasks = filter_by_status(@tasks)
     @tasks = sort_tasks(@tasks)
@@ -49,10 +50,9 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
     flash[:success] = I18n.t('tasks.destroyed_successfully')
-    redirect_to root_path
+    redirect_to tasks_path
   end
 
   private

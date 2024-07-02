@@ -4,12 +4,16 @@
 class SessionsController < ApplicationController
   def new; end
 
-  def create
+  def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     user = User.find_by(email: params[:session][:email].downcase)
     if user&.authenticate(params[:session][:password])
       reset_session
       log_in user
-      redirect_to tasks_path
+      if user.admin?
+        redirect_to admin_root_path
+      else
+        redirect_to tasks_path
+      end
     else
       flash.now[:alert] = I18n.t('sessions.login_failure')
       render :new, status: :unprocessable_entity
