@@ -4,7 +4,6 @@
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
   helper_method :sort_order_options, :status_filter_options
-
   def index
     @tasks = fetch_tasks
   end
@@ -59,7 +58,8 @@ class TasksController < ApplicationController
   def sort_order_options
     [
       [I18n.t('tasks.sort_options.created_at'), 'created_at'],
-      [I18n.t('tasks.sort_options.end_time'), 'end_time']
+      [I18n.t('tasks.sort_options.end_time'), 'end_time'],
+      [I18n.t('tasks.sort_options.priority'), 'priority']
     ]
   end
 

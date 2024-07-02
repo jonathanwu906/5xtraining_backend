@@ -24,7 +24,7 @@
                     turbo_confirm: t('tasks.destroy_confirm')
                   } %>
       <br>
-      <%= t('tasks.attributes.priority_row') %>: <%= t("tasks.attributes.priority.#{task.priority}") %>
+      <%= t('tasks.attributes.displayed_priority', priority: Task.human_attribute_name(task.priority)) %>
       <br>
       <%= t('tasks.attributes.displayed_status', status: Task.human_attribute_name(task.status)) %>
       <br>

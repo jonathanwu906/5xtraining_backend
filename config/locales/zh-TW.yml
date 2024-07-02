@@ -9,6 +9,10 @@ zh-TW:
         pending: "待處理"
         in_progress: "進行中"
         completed: "已完成"
+        priority: "優先程度"
+        low: "低"
+        medium: "中"
+        high: "高"
   tasks:
     back: "返回"
     title: "任務"
@@ -41,6 +45,7 @@ zh-TW:
         completed: "已完成"
         expired: "已過期"
       displayed_status: "狀態: %{status}"
+      displayed_priority: "優先程度: %{priority}"
       label: "標籤"
     submit: "送出"
     sort_by: "排序方式"
@@ -50,6 +55,7 @@ zh-TW:
     sort_options:
       created_at: "建立時間"
       end_time: "結束時間"
+      priority: "優先程度"
     status_options:
       all: "全部"
       pending: "待處理"
