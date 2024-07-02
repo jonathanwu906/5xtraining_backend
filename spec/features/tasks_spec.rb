@@ -36,18 +36,23 @@ RSpec.describe 'Tasks' do
   end
 
   describe '#index' do
-    let(:task_names) { %w[Task1 Task2 Task3] }
+    let!(:first_complete_task) do
+      travel_to(1.day.from_now) { create(:task, status: 2) }
+    end
+    let!(:second_progress_task) do
+      travel_to(2.days.from_now) { create(:task, status: 1) }
+    end
+    let!(:third_pending_task) do
+      travel_to(3.days.from_now) { create(:task, status: 0) }
+    end
 
     before do
-      travel_to(1.day.from_now) { create(:task, name: task_names[0]) }
-      travel_to(2.days.from_now) { create(:task, name: task_names[1]) }
-      travel_to(3.days.from_now) { create(:task, name: task_names[2]) }
       visit tasks_path
     end
 
-    it { is_expected.to have_text(task_names[0]) }
-    it { is_expected.to have_text(task_names[1]) }
-    it { is_expected.to have_text(task_names[2]) }
+    it { is_expected.to have_css("##{dom_id(first_complete_task)}", text: first_complete_task.name, count: 1) }
+    it { is_expected.to have_css("##{dom_id(second_progress_task)}", text: second_progress_task.name, count: 1) }
+    it { is_expected.to have_css("##{dom_id(third_pending_task)}", text: third_pending_task.name, count: 1) }
 
     context 'when sorting by created time' do
       before do
@@ -55,14 +60,14 @@ RSpec.describe 'Tasks' do
       end
 
       it 'sorts Task 1 before Task 2 by created time' do
-        task1_index = page.body.index(task_names[0])
-        task2_index = page.body.index(task_names[1])
+        task1_index = page.body.index(first_complete_task.name)
+        task2_index = page.body.index(second_progress_task.name)
         expect(task1_index).to be < task2_index
       end
 
       it 'sorts Task 2 before Task 3 by created time' do
-        task2_index = page.body.index(task_names[1])
-        task3_index = page.body.index(task_names[2])
+        task2_index = page.body.index(second_progress_task.name)
+        task3_index = page.body.index(third_pending_task.name)
         expect(task2_index).to be < task3_index
       end
     end
@@ -73,27 +78,25 @@ RSpec.describe 'Tasks' do
       end
 
       it 'sorts Task 1 before Task 2 by end time' do
-        task1_index = page.body.index(task_names[0])
-        task2_index = page.body.index(task_names[1])
+        task1_index = page.body.index(first_complete_task.name)
+        task2_index = page.body.index(second_progress_task.name)
         expect(task1_index).to be < task2_index
       end
 
       it 'sorts Task 2 before Task 3 by end time' do
-        task2_index = page.body.index(task_names[1])
-        task3_index = page.body.index(task_names[2])
+        task2_index = page.body.index(second_progress_task.name)
+        task3_index = page.body.index(third_pending_task.name)
         expect(task2_index).to be < task3_index
       end
     end
 
     context 'when searching by name' do
       before do
-        fill_in I18n.t('tasks.search_by_name'), with: task_names[0]
+        fill_in I18n.t('tasks.search_by_name'), with: first_complete_task.name
       end
 
       it 'displays the tasks with the specific name' do
-        within "##{dom_id(Task.find_by(name: task_names[0]))}" do
-          expect(page).to have_text(task_names[0])
-        end
+        expect(page).to have_css("##{dom_id(Task.find_by(name: first_complete_task.name))}")
       end
     end
 
@@ -106,9 +109,7 @@ RSpec.describe 'Tasks' do
 
       it 'displays the tasks with the specifc status' do
         Task.where(status: 'in_progress').find_each do |task|
-          within "##{dom_id(task)}" do
-            expect(page).to have_text(task.name)
-          end
+          expect(page).to have_css("##{dom_id(task)}", text: task.name)
         end
       end
     end
