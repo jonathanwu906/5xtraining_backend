@@ -31,39 +31,28 @@ RSpec.describe Task do
 
   describe 'scopes and queries' do
     context 'when searching by name' do
-      subject(:task) { described_class.where(name: task_name) }
+      subject { described_class.with_name(task_name) }
 
       let(:task_name) { Faker::Lorem.word }
       let!(:matching_task) { create(:task, name: task_name, user:) }
       let!(:non_matching_task) { create(:task, user:) }
 
-      it 'includes tasks matching the name query' do
-        expect(task).to include(matching_task)
-      end
-
-      it 'excludes tasks not matching the name query' do
-        expect(task).not_to include(non_matching_task)
-      end
+      it { is_expected.to include(matching_task) }
+      it { is_expected.not_to include(non_matching_task) }
     end
 
     context 'when filtering by status' do
-      subject(:task) { described_class.with_status(selected_status) }
+      subject { described_class.with_status(selected_status) }
 
       let(:selected_status) { %w[pending in_progress completed].sample }
-      let!(:task_with_selected_status) { create(:task, user:, status: selected_status) }
+      let!(:task_with_selected_status) { create(:task, selected_status, user:) }
       let!(:task_with_other_status) do
-        create(:task, user:, status: %w[pending in_progress completed].reject do |status|
-                                       status == selected_status
-                                     end.sample)
+        other_statuses = %w[pending in_progress completed] - [selected_status]
+        create(:task, other_statuses.sample, user:)
       end
 
-      it 'includes tasks with the correct status' do
-        expect(task).to include(task_with_selected_status)
-      end
-
-      it 'excludes tasks with other statuses' do
-        expect(task).not_to include(task_with_other_status)
-      end
+      it { is_expected.to include(task_with_selected_status) }
+      it { is_expected.not_to include(task_with_other_status) }
     end
   end
 end
