@@ -31,21 +31,24 @@ RSpec.describe Task do
 
   describe 'scopes and queries' do
     context 'when searching by name' do
+      subject(:task) { described_class.where(name: task_name) }
+
       let(:task_name) { Faker::Lorem.word }
       let!(:matching_task) { create(:task, name: task_name, user:) }
       let!(:non_matching_task) { create(:task, user:) }
-      let(:result) { described_class.with_name(task_name) }
 
       it 'includes tasks matching the name query' do
-        expect(result).to include(matching_task)
+        expect(task).to include(matching_task)
       end
 
       it 'excludes tasks not matching the name query' do
-        expect(result).not_to include(non_matching_task)
+        expect(task).not_to include(non_matching_task)
       end
     end
 
     context 'when filtering by status' do
+      subject(:task) { described_class.with_status(selected_status) }
+
       let(:selected_status) { %w[pending in_progress completed].sample }
       let!(:task_with_selected_status) { create(:task, user:, status: selected_status) }
       let!(:task_with_other_status) do
@@ -53,14 +56,13 @@ RSpec.describe Task do
                                        status == selected_status
                                      end.sample)
       end
-      let(:result) { described_class.where(status: selected_status) }
 
       it 'includes tasks with the correct status' do
-        expect(result).to include(task_with_selected_status)
+        expect(task).to include(task_with_selected_status)
       end
 
       it 'excludes tasks with other statuses' do
-        expect(result).not_to include(task_with_other_status)
+        expect(task).not_to include(task_with_other_status)
       end
     end
   end
