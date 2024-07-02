@@ -16,5 +16,4 @@ class Task < ApplicationRecord
   scope :in_processing, -> { where('end_time > ?', Time.current) }
   scope :with_name, ->(name_query) { where('name ILIKE ?', "%#{name_query}%") }
   scope :with_status, ->(status) { where(status:) }
-
 end
