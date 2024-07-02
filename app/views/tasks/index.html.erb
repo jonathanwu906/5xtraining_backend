@@ -1,8 +1,18 @@
 <h1><%= t('tasks.new') %></h1>
 <%= link_to t('tasks.new'), new_task_path %>
 <%= form_with url: tasks_path, method: :get, local: true do %>
-  <%= label_tag :sort_order, t('tasks.sort_by') %>:
-  <%= select_tag :sort_order, options_for_select(@sort_order_options, @current_order), onchange: 'this.form.submit();' %>
+  <div>
+    <%= label_tag :name_query, t('tasks.search_by_name') %>
+    <%= text_field_tag :name_query, params[:name_query], oninput: 'this.form.submit();' %>
+  </div>
+  <div>
+    <%= label_tag :status, t('tasks.filter_by_status') %>
+    <%= select_tag :status, options_for_select(status_filter_options, params[:status]), onchange: 'this.form.submit();' %>
+  </div>
+  <div>
+    <%= label_tag :sort_order, t('tasks.sort_by') %>
+    <%= select_tag :sort_order, options_for_select(sort_order_options, params[:sort_order]), onchange: 'this.form.submit();' %>
+  </div>
 <% end %>
 <ul>
   <% @tasks.each do |task| %>
@@ -14,7 +24,7 @@
                     turbo_confirm: t('tasks.destroy_confirm')
                   } %>
       <br>
-      <%= t('tasks.attributes.display_status', status: t("tasks.attributes.status.#{task.status}")) %>
+      <%= t('tasks.attributes.displayed_status', status: Task.human_attribute_name(task.status)) %>
       <br>
       <%= t('tasks.attributes.created_at', time: task.created_at) %>
       <br>
