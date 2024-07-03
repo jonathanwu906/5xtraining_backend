@@ -54,7 +54,7 @@ module Admin
     end
 
     def authorize_admin
-      redirect_to root_path, alert: 'Not authorized' unless current_user&.admin?
+      redirect_to tasks_path, alert: '權限不足無法存取' unless current_user&.admin?
     end
   end
 end

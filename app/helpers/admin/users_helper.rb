@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-module Admin # rubocop:disable Style/Documentation
+module Admin
+  # Admin::UsersHelper
+  module UsersHelper; end
 end
