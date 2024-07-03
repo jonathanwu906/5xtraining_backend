@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
+  # Admin can manage users
   class UsersController < ApplicationController
     before_action :authorize_admin
     before_action :set_user, only: %i[show edit update destroy tasks]
@@ -35,8 +36,11 @@ module Admin
     end
 
     def destroy
-      @user.destroy
-      redirect_to admin_users_path, notice: 'User was successfully destroyed.'
+      if @user.destroy
+        redirect_to admin_users_path, notice: 'User was successfully destroyed.'
+      else
+        redirect_to admin_users_path, alert: @user.errors.full_messages.to_sentence
+      end
     end
 
     def tasks

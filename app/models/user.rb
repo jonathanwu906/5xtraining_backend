@@ -11,7 +11,14 @@ class User < ApplicationRecord
 
   enum role: { user: 0, admin: 1 }
 
-  def admin?
-    role == 'admin'
+  before_destroy :check_last_admin
+
+  private
+
+  def check_last_admin
+    return unless User.admin.count == 1
+
+    errors.add(:base, '不能刪除最後一位管理員')
+    throw :abort
   end
 end
