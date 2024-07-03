@@ -78,7 +78,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    allowed_params = %i[name content start_time end_time priority status label]
-    params.require(:task).permit(*allowed_params)
+    params.require(:task).permit(%i[name content start_time end_time priority status label])
   end
 end
