@@ -4,6 +4,7 @@
 class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
   helper_method :sort_order_options, :status_filter_options
+
   def index
     @tasks = fetch_tasks
   end
@@ -79,17 +80,5 @@ class TasksController < ApplicationController
   def task_params
     allowed_params = %i[name content start_time end_time priority status label]
     params.require(:task).permit(*allowed_params)
-  end
-
-  def sort_tasks(tasks)
-    tasks.order(@sort_order => :asc)
-  end
-
-  def search_by_name(tasks)
-    @name_query.present? ? tasks.where('name ILIKE ?', "%#{@name_query}%") : tasks
-  end
-
-  def filter_by_status(tasks)
-    @status.present? ? tasks.where(status: @status) : tasks
   end
 end
