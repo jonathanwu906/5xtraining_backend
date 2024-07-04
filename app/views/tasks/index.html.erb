@@ -3,7 +3,8 @@
 <%= form_with url: tasks_path, method: :get, local: true do %>
   <div>
     <%= label_tag :name_query, t('tasks.search_by_name') %>
-    <%= text_field_tag :name_query, params[:name_query], oninput: 'this.form.submit();' %>
+    <%= text_field_tag :name_query, params[:name_query] %>
+    <%= submit_tag t('tasks.button.search_by_name'), name: nil %>
   </div>
   <div>
     <%= label_tag :status, t('tasks.filter_by_status') %>
@@ -23,6 +24,8 @@
                     turbo_method: :delete,
                     turbo_confirm: t('tasks.destroy_confirm')
                   } %>
+      <br>
+      <%= t('tasks.attributes.displayed_priority', priority: Task.human_attribute_name(task.priority)) %>
       <br>
       <%= t('tasks.attributes.displayed_status', status: Task.human_attribute_name(task.status)) %>
       <br>

@@ -27,5 +27,17 @@ FactoryBot.define do
     trait :completed do
       status { 'completed' }
     end
+
+    trait :high_priority do
+      priority { 'high' }
+    end
+
+    trait :medium_priority do
+      priority { 'medium' }
+    end
+
+    trait :low_priority do
+      priority { 'low' }
+    end
   end
 end

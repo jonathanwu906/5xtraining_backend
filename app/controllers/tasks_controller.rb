@@ -59,7 +59,8 @@ class TasksController < ApplicationController
   def sort_order_options
     [
       [I18n.t('tasks.sort_options.created_at'), 'created_at'],
-      [I18n.t('tasks.sort_options.end_time'), 'end_time']
+      [I18n.t('tasks.sort_options.end_time'), 'end_time'],
+      [I18n.t('tasks.sort_options.priority'), 'priority']
     ]
   end
 
@@ -77,7 +78,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    allowed_params = %i[name content start_time end_time priority status label]
-    params.require(:task).permit(*allowed_params)
+    params.require(:task).permit(%i[name content start_time end_time priority status label])
   end
 end

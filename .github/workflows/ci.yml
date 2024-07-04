@@ -45,10 +45,16 @@ jobs:
     - name: Set up PostgreSQL
       run: sudo apt-get install -y postgresql-client
 
-    - name: Create and setup database
+    - name: Setup database
       run: |
         bin/rails db:create
         bin/rails db:schema:load
+
+    - name: Setup Chrome and ChromeDriver
+      uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: 126.0.6478.126
+        install-chromedriver: true
 
     - name: Run tests
       run: bundle exec rspec -f d
