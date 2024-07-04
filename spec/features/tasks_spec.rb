@@ -111,7 +111,9 @@ RSpec.describe 'Tasks' do
 
       before do
         visit tasks_path
+        sleep 5
         fill_in I18n.t('tasks.search_by_name'), with: target_task.name
+        sleep 5
       end
 
       it { is_expected.to have_css("##{dom_id(target_task)}", text: target_task.name) }
