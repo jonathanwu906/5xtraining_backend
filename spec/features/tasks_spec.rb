@@ -105,15 +105,14 @@ RSpec.describe 'Tasks' do
       end
     end
 
-    context 'when searching by name', :js do
+    context 'when searching by name' do
       let!(:target_task) { create(:task) }
       let!(:other_task) { create(:task) }
 
       before do
         visit tasks_path
-        sleep 5
         fill_in I18n.t('tasks.search_by_name'), with: target_task.name
-        sleep 5
+        click_link_or_button I18n.t('tasks.button.search_by_name')
       end
 
       it { is_expected.to have_css("##{dom_id(target_task)}", text: target_task.name) }
