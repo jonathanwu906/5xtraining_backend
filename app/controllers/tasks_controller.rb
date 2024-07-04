@@ -49,12 +49,11 @@ class TasksController < ApplicationController
   private
 
   def fetch_tasks
-    tasks = Task.all.page(params[:page])
-                .in_processing
+    tasks = Task.in_processing
                 .with_name(params[:name_query])
                 .order(params[:sort_order] || 'created_at')
     tasks = tasks.with_status(params[:status]) if params[:status].present?
-    tasks
+    tasks.page(params[:page])
   end
 
   def sort_order_options
