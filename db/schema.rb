@@ -10,9 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_20_064459) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_05_115401) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "task_tags", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_task_tags_on_tag_id"
+    t.index ["task_id", "tag_id"], name: "index_task_tags_on_task_id_and_tag_id", unique: true
+    t.index ["task_id"], name: "index_task_tags_on_task_id"
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.string "name", null: false
@@ -21,7 +38,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_064459) do
     t.datetime "end_time", null: false
     t.integer "priority", null: false
     t.integer "status", null: false
-    t.string "label"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -29,7 +45,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_064459) do
     t.index ["status"], name: "index_tasks_on_status"
     t.index ["user_id"], name: "index_tasks_on_user_id"
     t.check_constraint "char_length(content) <= 1000", name: "content_length_check"
-    t.check_constraint "char_length(label::text) <= 30", name: "label_length_check"
     t.check_constraint "char_length(name::text) <= 255", name: "name_length_check"
   end
 
@@ -39,9 +54,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_064459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
-    t.index ["email"], name: "index_users_on_email", unique: true
     t.string "password_digest"
   end
 
+  add_foreign_key "task_tags", "tags"
+  add_foreign_key "task_tags", "tasks"
   add_foreign_key "tasks", "users"
 end
