@@ -3,6 +3,8 @@
 # A task belongs to a user with various validations
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :task_tags, dependent: :destroy
+  has_many :tags, through: :task_tags
   validates :name, presence: true, length: { maximum: 255 }
   validates :content, presence: true, length: { maximum: 1000 }
   validates :start_time, presence: true

@@ -15,6 +15,7 @@ class TasksController < ApplicationController
     @tasks = search_by_name(@tasks)
     @tasks = filter_by_status(@tasks)
     @tasks = sort_tasks(@tasks)
+    @tasks = @tasks.joins(:tags).where(tags: { name: params[:tag] }) if params[:tag].present?
   end
 
   def show; end
@@ -29,6 +30,7 @@ class TasksController < ApplicationController
     # TODO: 之後會改成登入後從 session 取得 user
     @task = current_user.tasks.build(task_params)
     if @task.save
+      update_tags(@task)
       flash[:success] = I18n.t('tasks.created_successfully')
       redirect_to action: :show, id: @task.id
     else
@@ -40,6 +42,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
+      update_tags(@task)
       flash[:success] = I18n.t('tasks.updated_successfully')
       redirect_to action: :show, id: @task.id
     else
@@ -62,8 +65,14 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    allowed_params = %i[name content start_time end_time priority status label]
+    allowed_params = %i[name content start_time end_time priority status tag_names: []]
     params.require(:task).permit(*allowed_params)
+  end
+
+  def update_tags(task)
+    tag_names = params[:task][:tag_names].reject(&:blank?)
+    tags = tag_names.map { |name| Tag.find_or_create_by(name:) }
+    task.tags = tags
   end
 
   def sort_tasks(tasks)
