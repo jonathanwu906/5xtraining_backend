@@ -81,3 +81,6 @@ gem 'pg'
 
 # 安裝 dotenv-rails 來管理環境變數
 gem 'dotenv-rails'
+
+# Step 17: 安裝 Kaminari
+gem 'kaminari'

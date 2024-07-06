@@ -2,7 +2,10 @@
 
 # A task belongs to a user with various validations
 class Task < ApplicationRecord
+  paginates_per 5
+
   belongs_to :user
+
   validates :name, presence: true, length: { maximum: 255 }
   validates :content, presence: true, length: { maximum: 1000 }
   validates :start_time, presence: true
