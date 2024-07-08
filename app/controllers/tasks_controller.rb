@@ -22,27 +22,29 @@ class TasksController < ApplicationController
     user = User.first
     @task = user.tasks.build(task_params)
     if @task.save
-      flash[:notice] = I18n.t('tasks.created_successfully')
+      flash[:success] = I18n.t('tasks.created_successfully')
       redirect_to action: :show, id: @task.id
     else
-      flash[:notice] = '任務建立失敗！' # rubocop:disable Rails/I18nLocaleTexts
+      flash[:alert] = I18n.t('tasks.created_failed')
+      flash.discard
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @task.update(task_params)
-      flash[:notice] = I18n.t('tasks.updated_successfully')
+      flash[:success] = I18n.t('tasks.updated_successfully')
       redirect_to action: :show, id: @task.id
     else
-      flash[:notice] = '任務更新失敗！' # rubocop:disable Rails/I18nLocaleTexts
+      flash[:alert] = I18n.t('tasks.updated_failed')
+      flash.discard
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @task.destroy
-    flash[:notice] = I18n.t('tasks.destroyed_successfully')
+    flash[:success] = I18n.t('tasks.destroyed_successfully')
     redirect_to root_path
   end
 

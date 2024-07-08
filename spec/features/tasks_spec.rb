@@ -147,7 +147,7 @@ RSpec.describe 'Tasks' do
       before do
         fill_in I18n.t('tasks.attributes.name'), with: new_task_name
         fill_in I18n.t('tasks.attributes.content'), with: new_task_content
-        click_link_or_button I18n.t('tasks.submit')
+        click_link_or_button I18n.t('tasks.update')
       end
 
       it { is_expected.to have_text(I18n.t('tasks.updated_successfully')) }
@@ -158,7 +158,7 @@ RSpec.describe 'Tasks' do
     context 'when update fails' do
       before do
         fill_in I18n.t('tasks.attributes.name'), with: ''
-        click_link_or_button I18n.t('tasks.submit')
+        click_link_or_button I18n.t('tasks.update')
       end
 
       it { is_expected.to have_text(I18n.t('errors.messages.blank')) }
