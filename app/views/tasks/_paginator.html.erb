@@ -1,0 +1,27 @@
+<nav class="mt-2">
+  <ul class="flex justify-center space-x-1">
+    <% if @paginator.prev_page %>
+      <li>
+        <%= link_to t('views.pagination.previous'), url_for(params.merge(page: @paginator.prev_page)), class: "bg-gray-200 text-gray-700 py-2 px-4 rounded hover:bg-gray-300" %>
+      </li>
+    <% end %>
+
+    <% @paginator.each_page do |page| %>
+      <% if page %>
+        <li>
+          <%= link_to page, url_for(params.merge(page: page)), class: "bg-gray-200 text-gray-700 py-2 px-4 rounded hover:bg-gray-300 <%= 'bg-blue-500 text-white' if page == @paginator.current_page %>" %>
+        </li>
+      <% else %>
+        <li>
+          <span class="py-2 px-4">...</span>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if @paginator.next_page %>
+      <li>
+        <%= link_to t('views.pagination.next'), url_for(params.merge(page: @paginator.next_page)), class: "bg-gray-200 text-gray-700 py-2 px-4 rounded hover:bg-gray-300" %>
+      </li>
+    <% end %>
+  </ul>
+</nav>
