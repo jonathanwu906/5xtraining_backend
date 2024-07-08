@@ -73,6 +73,7 @@ group :test do
   gem 'capybara'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers', '~> 6.0'
 end
 
 # Step 5: 安裝 pg
@@ -80,3 +81,8 @@ gem 'pg'
 
 # 安裝 dotenv-rails 來管理環境變數
 gem 'dotenv-rails'
+
+# Step 17: 安裝 Kaminari
+gem 'kaminari'
+
+gem 'tailwindcss-rails', '~> 2.6'
