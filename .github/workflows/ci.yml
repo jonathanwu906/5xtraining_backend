@@ -59,5 +59,11 @@ jobs:
         chrome-version: 126.0.6478.126
         install-chromedriver: true
 
+    - name: Setup Chrome and ChromeDriver
+      uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: 126.0.6478.126
+        install-chromedriver: true
+
     - name: Run tests
       run: bundle exec rspec -f d

@@ -6,17 +6,16 @@
   <%= form_with url: tasks_path, method: :get, local: true, class: "mb-4 mx-auto max-w-4xl" do %>
     <div class="mb-4">
       <%= label_tag :name_query, t('tasks.search_by_name'), class: "block text-sm font-medium text-gray-700" %>
-      <%= text_field_tag :name_query, params[:name_query], class: "block w-full mt-1 py-2 px-3 max-w-xs border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
-      <%= submit_tag t('tasks.button.search_by_name'), name: nil, class: "bg-blue-500 text-white  mt-2 py-2 px-4 rounded hover:bg-blue-600 cursor-pointer" %>
+      <%= text_field_tag :name, params[:name], class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+      <%= submit_tag t('tasks.button.search_by_name'), class: "bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 cursor-pointer" %>
     </div>
     <div class="mb-4">
-      <%= label_tag :status, t('tasks.filter_by_status'), class: "block text-sm font-medium text-gray-700" %>
-      <%= select_tag :status, options_for_select(status_filter_options, params[:status]), class: "block w-full mt-1 py-2 px-3 max-w-xs border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
-      
+      <%= label_tag :status, t('tasks.filter_by_status'), class: "block text-sm font-medium text-gray-700"> %>
+      <%= select_tag :status, options_for_select(status_filter_options, params[:status]), class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
     </div>
     <div class="mb-4">
       <%= label_tag :sort_order, t('tasks.sort_by'), class: "block text-sm font-medium text-gray-700" %>
-      <%= select_tag :sort_order, options_for_select(sort_order_options, params[:sort_order]), class: "block w-full mt-1 py-2 px-3 max-w-xs border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
+      <%= select_tag :sort_order, options_for_select(sort_order_options, params[:sort_order]), class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
     </div>
   <% end %>
   
@@ -45,7 +44,7 @@
     </ul>
   </div>
 
-  <div class="flex justify-center mt-4">
+  <div class="mt-4 flex justify-center">
     <%= paginate @tasks %>
   </div>
 </div>

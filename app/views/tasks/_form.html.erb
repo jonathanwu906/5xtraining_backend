@@ -1,7 +1,7 @@
 <%= form_with(model: @task, local: true, class: "max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md") do |form| %>
   <div class="mb-4">
     <%= form.label :name, t('tasks.attributes.name'), class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :name, class: "block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    <%= form.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:name].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:name].join(", ") %></div>
     <% end %>
@@ -9,7 +9,7 @@
 
   <div class="mb-4">
     <%= form.label :content, t('tasks.attributes.content'), class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_area :content, class: "block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    <%= form.text_area :content, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:content].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:content].join(", ") %></div>
     <% end %>
@@ -17,7 +17,7 @@
 
   <div class="mb-4">
     <%= form.label :start_time, t('tasks.button.start_time'), class: "block text-sm font-medium text-gray-700" %>
-    <%= form.datetime_select :start_time, class: "block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    <%= form.datetime_select :start_time, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:start_time].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:start_time].join(", ") %></div>
     <% end %>
@@ -25,7 +25,7 @@
 
   <div class="mb-4">
     <%= form.label :end_time, t('tasks.button.end_time'), class: "block text-sm font-medium text-gray-700" %>
-    <%= form.datetime_select :end_time, class: "block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    <%= form.datetime_select :end_time, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:end_time].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:end_time].join(", ") %></div>
     <% end %>
@@ -33,7 +33,7 @@
 
   <div class="mb-4">
     <%= form.label :priority, t('tasks.attributes.priority_row'), class: "block text-sm font-medium text-gray-700" %>
-    <%= form.select :priority, Task.priorities.keys.map { |key| [I18n.t("tasks.attributes.priority.#{key}"), key] }, {}, class: "block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    <%= form.select :priority, Task.priorities.keys.map { |key| [I18n.t("tasks.attributes.priority.#{key}"), key] }, {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:priority].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:priority].join(", ") %></div>
     <% end %>
@@ -41,7 +41,7 @@
 
   <div class="mb-4">
     <%= form.label :status, t('tasks.attributes.status_row'), class: "block text-sm font-medium text-gray-700" %>
-    <%= form.select :status, Task.statuses.keys.map { |key| [I18n.t("tasks.attributes.status.#{key}"), key] }, {}, class: "block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    <%= form.select :status, Task.statuses.keys.map { |key| [I18n.t("tasks.attributes.status.#{key}"), key] }, {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:status].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:status].join(", ") %></div>
     <% end %>
@@ -49,7 +49,7 @@
 
   <div class="mb-4">
     <%= form.label :label, t('tasks.attributes.label'), class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :label, class: "block w-full mt-1 py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    <%= form.text_field :label, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:label].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:label].join(", ") %></div>
     <% end %>
