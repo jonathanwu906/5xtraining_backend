@@ -16,7 +16,7 @@
   </div>
 
   <div class="mb-4">
-    <%= form.label :start_time, t('tasks.attributes.start_time'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.label :start_time, t('tasks.button.start_time'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.datetime_select :start_time, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:start_time].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:start_time].join(", ") %></div>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="mb-4">
-    <%= form.label :end_time, t('tasks.attributes.end_time'), class: "block text-sm font-medium text-gray-700" %>
+    <%= form.label :end_time, t('tasks.button.end_time'), class: "block text-sm font-medium text-gray-700" %>
     <%= form.datetime_select :end_time, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
     <% if @task.errors[:end_time].any? %>
       <div class="error text-red-500 text-sm mt-2"><%= @task.errors[:end_time].join(", ") %></div>

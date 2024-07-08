@@ -5,17 +5,17 @@
   </div>
   <%= form_with url: tasks_path, method: :get, local: true, class: "mb-4 mx-auto max-w-4xl" do %>
     <div class="mb-4">
-      <label for="name" class="block text-sm font-medium text-gray-700"><%= t('tasks.search_by_name') %>:</label>
+      <%= label_tag :name_query, t('tasks.search_by_name'), class: "block text-sm font-medium text-gray-700" %>
       <%= text_field_tag :name, params[:name], class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
       <%= submit_tag t('tasks.button.search_by_name'), class: "bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 cursor-pointer" %>
     </div>
     <div class="mb-4">
-      <label for="status" class="block text-sm font-medium text-gray-700"><%= t('tasks.filter_by_status') %>:</label>
-      <%= select_tag :status, status_filter_options(params[:status]), class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
+      <%= label_tag :status, t('tasks.filter_by_status'), class: "block text-sm font-medium text-gray-700"> %>
+      <%= select_tag :status, options_for_select(status_filter_options, params[:status]), class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
     </div>
     <div class="mb-4">
-      <label for="sort_order" class="block text-sm font-medium text-gray-700"><%= t('tasks.sort_by') %>:</label>
-      <%= select_tag :sort_order, sort_options(@sort_order), class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
+      <%= label_tag :sort_order, t('tasks.sort_by'), class: "block text-sm font-medium text-gray-700" %>
+      <%= select_tag :sort_order, options_for_select(sort_order_options, params[:sort_order]), class: "mt-1 block w-full max-w-xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer", onchange: 'this.form.submit();' %>
     </div>
   <% end %>
   
@@ -31,13 +31,13 @@
             </div>
           </div>
           <div class="mt-2 text-sm text-gray-700">
-            <%= t('tasks.attributes.status_row') %>: <%= t("tasks.attributes.status.#{task.status}") %>
+            <%= t('tasks.attributes.displayed_priority', priority: Task.human_attribute_name(task.priority)) %>
             <br>
-            <%= t('tasks.attributes.priority_row') %>: <%= t("tasks.attributes.priority.#{task.priority}") %>
+            <%= t('tasks.attributes.displayed_status', status: Task.human_attribute_name(task.status)) %>
             <br>
-            <%= t('tasks.attributes.created_at') %>: <%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+            <%= t('tasks.attributes.created_at', time: task.created_at) %>
             <br>
-            <%= t('tasks.attributes.end_time') %>: <%= task.end_time.strftime("%Y-%m-%d %H:%M:%S") %>
+            <%= t('tasks.attributes.end_time', time: task.end_time) %>
           </div>
         </li>
       <% end %>
